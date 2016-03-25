@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, DJIActiveTrackMissionExecutionState)
  *  A rectangle in the live video view image that represents the target being tracked. It is only valid when executionState is
  *  `DJIActiveTrackMissionExecutionStateTracking`, `DJIActiveTrackMissionExecutionStateTrackingWithLowConfidence`, 
  *  `DJIActiveTrackMissionExecutionStateWaitingForConfirmation` or `DJIActiveTrackMissionExecutionStateCannotContinue`.
- *  The rectancle is normalized to [0,1] where (0,0) is the top left of the video preview and (1,1) is the bottom right.
+ *  The rectangle is normalized to [0,1] where (0,0) is the top left of the video preview and (1,1) is the bottom right.
  */
 @property(nonatomic, readonly) CGRect trackingRect;
 
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, DJIActiveTrackMissionExecutionState)
 /**
  *  ActiveTrack Mission allows an aircraft to track a moving subject using the vision system and without a GPS tracker on the subject. To use an ActiveTrack mission:
  *      - prepareMission with the rectangle that best represents the target to track
- *      - startMission to initate tracking of the object and begin the state updates (DJIMissionProgressStatus)
+ *      - startMission to initiate tracking of the object and begin the state updates (DJIMissionProgressStatus)
  *      - At this point, the aircraft will track the target while hovering in place.
  *      - Give confirmation that the tracked target is correct with acceptConfirmationWithCompletion and the aircraft will begin flying relative to the target.
  *      - If the tracking algorithm looses sufficient confidence in tracking the target, then the aircraft will stop flying relative to the object and either notify the user (through execution state) that the target is lost or it needs another confirmation that the target is correct.
@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, DJIActiveTrackMissionExecutionState)
 @interface DJIActiveTrackMission : DJIMission
 
 /**
- *  A bounding box for the target. The rectancle is normalized to [0,1] where (0,0) is the top left of the video preview and (1,1) is the bottom right.
+ *  A bounding box for the target. The rectangle is normalized to [0,1] where (0,0) is the top left of the video preview and (1,1) is the bottom right.
  *  The `size` parameter of `CGRect` can be set to 0 to initialize the mission with a point instead of a rectangle. If the mission is initialized with a point, the vision system will try to recognize object around the point and return the representative rect in the status delegate.
 */
 @property(nonatomic, assign) CGRect rect;

@@ -14,20 +14,20 @@
 
 -(void) renderViewDidTouchAtPoint:(CGPoint)point;
 
--(void) renderViewDidMovePoint:(CGPoint)targetPoint fromPoint:(CGPoint)originPoint isFinished:(BOOL)finished;
+-(void) renderViewDidMoveToPoint:(CGPoint)endPoint fromPoint:(CGPoint)startPoint isFinished:(BOOL)finished;
 
 @end
 
 @interface TrackingRenderView : UIView
 
-@property(nonatomic, weak) IBOutlet id<TrackingRenderViewDelegate> delegate;
+@property(nonatomic, weak) id<TrackingRenderViewDelegate> delegate;
 
 @property(nonatomic, assign) CGRect trackingRect;
 
-@property(nonatomic, assign) BOOL isDotLine;
+@property(nonatomic, assign) BOOL isDottedLine;
 
 @property(nonatomic, strong) NSString* text;
 
--(void) updateRect:(CGRect)rect fillClole:(UIColor*)fillColor;
+-(void) updateRect:(CGRect)rect fillColor:(UIColor*)fillColor;
 
 @end

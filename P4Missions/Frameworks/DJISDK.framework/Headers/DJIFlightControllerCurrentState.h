@@ -205,15 +205,15 @@ typedef NS_ENUM (NSUInteger, DJIFlightControllerGoHomeExecutionStatus){
  */
 typedef NS_ENUM (uint8_t, DJIFlightOrientationMode){
     /**
-     * The aicraft should move relative to a locked course heading.
+     * The aircraft should move relative to a locked course heading.
      */
     DJIFlightOrientationModeCourseLock,
     /**
-     * The aicraft should move relative radially to the Home Point.
+     * The aircraft should move relative radially to the Home Point.
      */
     DJIFlightOrientationModeHomeLock,
     /**
-     *  The aicraft should move relative to the front of the aircraft.
+     *  The aircraft should move relative to the front of the aircraft.
      */
     DJIFlightOrientationModeDefaultAircraftHeading,
 };

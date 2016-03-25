@@ -75,7 +75,7 @@ typedef NS_ENUM (uint8_t, DJIWaypointMissionFinishedAction){
      */
     DJIWaypointMissionFinishedNoAction,
     /**
-     *  The aicraft will go home when the mission is complete.
+     *  The aircraft will go home when the mission is complete.
      *  If the aircraft is more than 20m away from the home point it will go home and land.
      *  Otherwise, it will land directly at the current location.
      */
