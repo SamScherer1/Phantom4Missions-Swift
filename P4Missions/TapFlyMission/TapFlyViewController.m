@@ -17,7 +17,9 @@
 @property (weak, nonatomic) IBOutlet PointingTouchView *touchView;
 @property (weak, nonatomic) IBOutlet UIButton* startStopButton;
 @property (weak, nonatomic) IBOutlet UILabel* speedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *horiObstacleAvoidLabel;
 
+@property (nonatomic, assign) BOOL isHorizontalObstacleAvoidanceEnabled;
 @property (nonatomic, assign) BOOL isMissionRunning;
 @property (nonatomic, assign) float speed;
 @property (nonatomic, strong) NSMutableString *logString;
@@ -68,6 +70,7 @@
     self.logString = [NSMutableString string];
     self.speed = 5.0;
     self.isMissionRunning = NO;
+    self.isHorizontalObstacleAvoidanceEnabled = NO;
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onScreenTouched:)];
     [self.touchView addGestureRecognizer:tapGesture];
     
@@ -78,8 +81,10 @@
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.speedLabel setTextColor:[UIColor blackColor]];
+        [self.horiObstacleAvoidLabel setTextColor:[UIColor blackColor]];
     }else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         [self.speedLabel setTextColor:[UIColor whiteColor]];
+        [self.horiObstacleAvoidLabel setTextColor:[UIColor whiteColor]];
     }
     
 }
@@ -106,7 +111,9 @@
     self.speedLabel.text = [NSString stringWithFormat:@"%0.1fm/s", speed];
     if (self.isMissionRunning) {
         [DJITapFlyMission setAutoFlightSpeed:self.speed withCompletion:^(NSError * _Nullable error) {
-            NSLog(@"Set TapFly Auto Flight Speed:%0.1f Error:%@", speed, error.localizedDescription);
+            if (error) {
+                NSLog(@"Set TapFly Auto Flight Speed:%0.1f Error:%@", speed, error.localizedDescription);
+            }
         }];
     }
 }
@@ -118,6 +125,11 @@
     
     point = [DemoUtility pointToStreamSpace:point withView:self.touchView];
     [self startPointMissionWithPoint:point];
+}
+
+-(IBAction) onSwitchValueChanged:(UISwitch*)sender
+{
+    self.isHorizontalObstacleAvoidanceEnabled = sender.isOn;
 }
 
 -(IBAction) onStartStopButtonClicked:(UIButton*)sender
@@ -151,7 +163,7 @@
     DJITapFlyMission* tapFlyMission = [[DJITapFlyMission alloc] init];
     tapFlyMission.imageLocationToCalculateDirection = point;
     tapFlyMission.autoFlightSpeed = self.speed;
-    tapFlyMission.isHorizontalObstacleAvoidanceEnabled = NO;
+    tapFlyMission.isHorizontalObstacleAvoidanceEnabled = self.isHorizontalObstacleAvoidanceEnabled;
     weakSelf(target);
     [[DJIMissionManager sharedInstance] prepareMission:tapFlyMission withProgress:nil withCompletion:^(NSError * _Nullable error) {
         if (error) {

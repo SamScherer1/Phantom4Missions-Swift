@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/DJIActiveTrackMission.h</key>
 		<data>
-		4K6mVBxBqv+A9HM5j49/JeMx6Yg=
+		p7VMrLzsaC28HFkDdQb0qvJsxk0=
 		</data>
 		<key>Headers/DJIAirLink.h</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>Headers/DJIFlightControllerCurrentState.h</key>
 		<data>
-		Nd4DrdWbftiSIjGBuMn0eg4tyXM=
+		k28QPgZ86KQoX0Sc2FW5/54ad1s=
 		</data>
 		<key>Headers/DJIFlightLimitation.h</key>
 		<data>
@@ -202,7 +202,7 @@
 		</data>
 		<key>Headers/DJITapFlyMission.h</key>
 		<data>
-		92/Pg/9Rjau5eMRVFPjY53LGNyI=
+		4mbUG7astaMokqRwObTNrudeUUc=
 		</data>
 		<key>Headers/DJIWaypoint.h</key>
 		<data>
@@ -210,7 +210,7 @@
 		</data>
 		<key>Headers/DJIWaypointMission.h</key>
 		<data>
-		nZRsg+mCmi1qKpTKjWL43A2Mb+E=
+		fSTAqBuAbGkU9C/+dxLSPvKLNZ8=
 		</data>
 		<key>Headers/DJIWaypointStep.h</key>
 		<data>
@@ -226,7 +226,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Sm+e+6C7BH3oohDhhmW+pbzEADc=
+		Z8rmpOlgpKAD3DBVNceYf/+paA0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -237,7 +237,7 @@
 	<dict>
 		<key>Headers/DJIActiveTrackMission.h</key>
 		<data>
-		4K6mVBxBqv+A9HM5j49/JeMx6Yg=
+		p7VMrLzsaC28HFkDdQb0qvJsxk0=
 		</data>
 		<key>Headers/DJIAirLink.h</key>
 		<data>
@@ -309,7 +309,7 @@
 		</data>
 		<key>Headers/DJIFlightControllerCurrentState.h</key>
 		<data>
-		Nd4DrdWbftiSIjGBuMn0eg4tyXM=
+		k28QPgZ86KQoX0Sc2FW5/54ad1s=
 		</data>
 		<key>Headers/DJIFlightLimitation.h</key>
 		<data>
@@ -433,7 +433,7 @@
 		</data>
 		<key>Headers/DJITapFlyMission.h</key>
 		<data>
-		92/Pg/9Rjau5eMRVFPjY53LGNyI=
+		4mbUG7astaMokqRwObTNrudeUUc=
 		</data>
 		<key>Headers/DJIWaypoint.h</key>
 		<data>
@@ -441,7 +441,7 @@
 		</data>
 		<key>Headers/DJIWaypointMission.h</key>
 		<data>
-		nZRsg+mCmi1qKpTKjWL43A2Mb+E=
+		fSTAqBuAbGkU9C/+dxLSPvKLNZ8=
 		</data>
 		<key>Headers/DJIWaypointStep.h</key>
 		<data>

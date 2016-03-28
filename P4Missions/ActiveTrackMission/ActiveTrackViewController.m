@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet TrackingRenderView *renderView;
 @property (weak, nonatomic) IBOutlet UIButton* stopButton;
+@property (weak, nonatomic) IBOutlet UILabel *retreatEnabledLabel;
 
 @property(nonatomic, assign) CGPoint startPoint;
 @property(nonatomic, assign) CGPoint endPoint;
@@ -24,6 +25,7 @@
 
 @property(nonatomic, assign) BOOL isNeedConfirm;
 @property(nonatomic, assign) BOOL isTrackingMissionRuning;
+@property(nonatomic, assign) BOOL isRetreatEnabled;
 
 @end
 
@@ -61,11 +63,18 @@
     [[VideoPreviewer instance] start];
     self.renderView.delegate = self;
     
+    self.isRetreatEnabled = NO;
     self.logString = [NSMutableString string];
     self.stopButton.layer.cornerRadius = self.stopButton.frame.size.width * 0.5;
     self.stopButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.stopButton.layer.borderWidth = 1.0;
     self.stopButton.layer.masksToBounds = YES;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.retreatEnabledLabel setTextColor:[UIColor blackColor]];
+    }else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        [self.retreatEnabledLabel setTextColor:[UIColor whiteColor]];
+    }
     
 }
 
@@ -173,7 +182,7 @@
     NSLog(@"Start Mission:{%f, %f, %f, %f}", normalizedRect.origin.x, normalizedRect.origin.y, normalizedRect.size.width, normalizedRect.size.height);
     DJIActiveTrackMission* trackMission = [[DJIActiveTrackMission alloc] init];
     trackMission.rect = normalizedRect;
-    trackMission.isRetreatEnabled = NO;
+    trackMission.isRetreatEnabled = self.isRetreatEnabled;
     [[DJIMissionManager sharedInstance] prepareMission:trackMission withProgress:nil withCompletion:^(NSError * _Nullable error) {
         if (error) {
             weakReturn(target);
@@ -205,6 +214,11 @@
     CGFloat height = fabs(point1.y - point2.y);
     CGRect rect = CGRectMake(origin_x, origin_y, width, height);
     return rect;
+}
+
+-(IBAction) onSwitchValueChanged:(UISwitch*)sender
+{
+    self.isRetreatEnabled = sender.isOn;
 }
 
 #pragma mark - DJICameraDelegate
