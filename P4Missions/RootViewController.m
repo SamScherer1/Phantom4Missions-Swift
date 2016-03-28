@@ -9,6 +9,8 @@
 #import "RootViewController.h"
 #import "DemoUtility.h"
 
+#define ENTER_DEBUG_MODE 0
+
 @interface RootViewController ()<DJISDKManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *tapFlyMissionButton;
 @property (weak, nonatomic) IBOutlet UIButton *activeTrackMissionButton;
@@ -57,8 +59,14 @@
 
 -(void) sdkManagerProductDidChangeFrom:(DJIBaseProduct* _Nullable) oldProduct to:(DJIBaseProduct* _Nullable) newProduct
 {
-    [self.tapFlyMissionButton setEnabled:YES];
-    [self.activeTrackMissionButton setEnabled:YES];
+    if (newProduct) {
+        [self.tapFlyMissionButton setEnabled:YES];
+        [self.activeTrackMissionButton setEnabled:YES];
+    }else
+    {
+        [self.tapFlyMissionButton setEnabled:NO];
+        [self.activeTrackMissionButton setEnabled:NO];
+    }
 }
 
 - (void)sdkManagerDidRegisterAppWithError:(NSError *)error
@@ -72,10 +80,12 @@
     }else
     {
         NSLog(@"registerAppSuccess");
+#if ENTER_DEBUG_MODE
+        [DJISDKManager enterDebugModeWithDebugId:@"192.168.1.106"];
+#else
         [DJISDKManager startConnectionToProduct];
-
+#endif
     }
-    
 }
 
 

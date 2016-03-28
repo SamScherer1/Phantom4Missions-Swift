@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MeU-jl-o0z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MeU-jl-o0z">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -237,14 +237,15 @@
                                         <include reference="ga7-Ck-hOh"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=regular">
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="801" y="725" width="123" height="21"/>
                                     <mask key="constraints">
                                         <include reference="KzF-5V-DlV"/>
                                         <include reference="W3G-NT-RW6"/>
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bp-uD-2KW">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bp-uD-2KW">
                                 <rect key="frame" x="0.0" y="277" width="46" height="46"/>
                                 <color key="backgroundColor" red="1" green="0.16112972170000001" blue="0.089715209360000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -255,8 +256,11 @@
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="940" y="359" width="46" height="46"/>
+                                </variation>
                                 <connections>
-                                    <action selector="onStopButtonClicked:" destination="arI-ds-kI3" eventType="touchUpInside" id="2Kb-80-PMW"/>
+                                    <action selector="onStopButtonClicked:" destination="arI-ds-kI3" eventType="touchUpInside" id="qdA-xp-Gbv"/>
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g6A-y5-loZ">
@@ -265,6 +269,9 @@
                                     <constraint firstAttribute="width" constant="49" id="9VU-eY-4PK"/>
                                     <constraint firstAttribute="height" constant="31" id="heC-Hr-j54"/>
                                 </constraints>
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="938" y="720" width="51" height="31"/>
+                                </variation>
                                 <connections>
                                     <action selector="onSwitchValueChanged:" destination="arI-ds-kI3" eventType="valueChanged" id="q3f-hi-sAy"/>
                                 </connections>
@@ -402,13 +409,13 @@
                         <outlet property="fpvView" destination="Dgf-Vb-eVJ" id="QeT-ID-x8t"/>
                         <outlet property="renderView" destination="2MI-Wx-RJZ" id="v2E-Od-t0w"/>
                         <outlet property="retreatEnabledLabel" destination="MaK-98-ksp" id="ea4-yq-aav"/>
-                        <outlet property="stopButton" destination="4bp-uD-2KW" id="0Hw-Qw-KrK"/>
+                        <outlet property="stopButton" destination="4bp-uD-2KW" id="yRt-e0-1ee"/>
                         <outlet property="view" destination="Wsj-Jg-wpm" id="Hhv-xz-pNS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytK-Mk-dEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113.5" y="242.25"/>
+            <point key="canvasLocation" x="974.25" y="806"/>
         </scene>
         <!--Tap Fly View Controller-->
         <scene sceneID="wF6-ZJ-b1u">
@@ -587,6 +594,17 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rC3-wy-h4b">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.042841480270524035" blue="0.044325536591538373" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="X"/>
+                                <variation key="heightClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="591" y="173" width="46" height="46"/>
+                                </variation>
+                                <connections>
+                                    <action selector="onStopMissionButtonAction:" destination="7ql-iB-wlY" eventType="touchUpInside" id="0CV-Lj-zKP"/>
+                                </connections>
+                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqO-v7-CFv">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.1764705926" green="0.99215692280000001" blue="0.180392161" alpha="1" colorSpace="deviceRGB"/>
@@ -619,7 +637,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="onStartStopButtonClicked:" destination="7ql-iB-wlY" eventType="touchUpInside" id="4sM-wi-HX4"/>
+                                    <action selector="onStartMissionButtonAction:" destination="7ql-iB-wlY" eventType="touchUpInside" id="MPb-qq-sUG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Horizontal Obstacle Avoidance Enabled :" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="XWr-Dc-j9a">
@@ -740,6 +758,9 @@
                             </constraint>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="rC3-wy-h4b"/>
+                            </mask>
                             <mask key="constraints">
                                 <exclude reference="HZV-Yz-PsM"/>
                                 <exclude reference="Z95-wF-9Yv"/>
@@ -778,6 +799,7 @@
                                 <include reference="aNT-Nn-bW1"/>
                                 <include reference="19J-0Q-EtP"/>
                                 <include reference="B5Z-Rb-vlZ"/>
+                                <include reference="rC3-wy-h4b"/>
                                 <include reference="PqO-v7-CFv"/>
                                 <include reference="XWr-Dc-j9a"/>
                             </mask>
@@ -830,7 +852,8 @@
                         <outlet property="fpvView" destination="GgT-4j-44d" id="Rlf-lT-1Ti"/>
                         <outlet property="horiObstacleAvoidLabel" destination="XWr-Dc-j9a" id="PjC-1E-tDq"/>
                         <outlet property="speedLabel" destination="B5Z-Rb-vlZ" id="J78-R9-PU5"/>
-                        <outlet property="startStopButton" destination="PqO-v7-CFv" id="vrS-n5-diq"/>
+                        <outlet property="startMissionBtn" destination="PqO-v7-CFv" id="1ba-88-QbC"/>
+                        <outlet property="stopMissionBtn" destination="rC3-wy-h4b" id="9MH-UB-p95"/>
                         <outlet property="touchView" destination="hta-xj-G0W" id="M9m-M2-EwI"/>
                         <outlet property="view" destination="RXg-3s-jAp" id="b2F-uO-DRj"/>
                     </connections>
@@ -955,10 +978,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ihy-5h-dKC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-358" y="-187"/>
+            <point key="canvasLocation" x="-359" y="-234"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vt9-sb-8rx"/>
+        <segue reference="2AQ-QJ-ANa"/>
     </inferredMetricsTieBreakers>
 </document>

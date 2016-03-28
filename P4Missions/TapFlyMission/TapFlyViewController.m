@@ -11,11 +11,12 @@
 #import "DemoUtility.h"
 #import "StatusViewController.h"
 
-@interface TapFlyViewController () <DJICameraDelegate, DJIMissionManagerDelegate, DJIGimbalDelegate>
+@interface TapFlyViewController () <DJICameraDelegate, DJIMissionManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet PointingTouchView *touchView;
-@property (weak, nonatomic) IBOutlet UIButton* startStopButton;
+@property (weak, nonatomic) IBOutlet UIButton* startMissionBtn;
+@property (weak, nonatomic) IBOutlet UIButton* stopMissionBtn;
 @property (weak, nonatomic) IBOutlet UILabel* speedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *horiObstacleAvoidLabel;
 
@@ -23,11 +24,12 @@
 @property (nonatomic, assign) BOOL isMissionRunning;
 @property (nonatomic, assign) float speed;
 @property (nonatomic, strong) NSMutableString *logString;
-@property (nonatomic, strong) DJIGimbalState* gimbalState;
 
 @end
 
 @implementation TapFlyViewController
+
+#pragma mark - Inherited Methods
 
 -(void) viewWillAppear:(BOOL)animated
 {
@@ -41,11 +43,6 @@
     DJICamera* camera = [DemoUtility fetchCamera];
     if (camera) {
         camera.delegate = self;
-    }
-    
-    DJIGimbal* gimbal = [DemoUtility fetchGimbal];
-    if (gimbal) {
-        gimbal.delegate = self;
     }
     
     [[VideoPreviewer instance] start];
@@ -74,10 +71,15 @@
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onScreenTouched:)];
     [self.touchView addGestureRecognizer:tapGesture];
     
-    self.startStopButton.layer.cornerRadius = self.startStopButton.frame.size.width * 0.5;
-    self.startStopButton.layer.borderColor = [UIColor blueColor].CGColor;
-    self.startStopButton.layer.borderWidth = 1.2;
-    self.startStopButton.layer.masksToBounds = YES;
+    self.startMissionBtn.layer.cornerRadius = self.startMissionBtn.frame.size.width * 0.5;
+    self.startMissionBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.startMissionBtn.layer.borderWidth = 1.2;
+    self.startMissionBtn.layer.masksToBounds = YES;
+    
+    self.stopMissionBtn.layer.cornerRadius = self.stopMissionBtn.frame.size.width * 0.5;
+    self.stopMissionBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.stopMissionBtn.layer.borderWidth = 1.2;
+    self.stopMissionBtn.layer.masksToBounds = YES;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.speedLabel setTextColor:[UIColor blackColor]];
@@ -102,7 +104,7 @@
     [statusVC setStatusText:self.logString];
 }
 
-#pragma mark Custom Methods
+#pragma mark IBAction Methods
 
 -(IBAction) onSliderValueChanged:(UISlider*)slider
 {
@@ -118,47 +120,52 @@
     }
 }
 
+-(IBAction) onSwitchValueChanged:(UISwitch*)sender
+{
+    self.isHorizontalObstacleAvoidanceEnabled = sender.isOn;
+}
+
+-(IBAction) onStartMissionButtonAction:(UIButton*)sender
+{
+    weakSelf(target);
+    [[DJIMissionManager sharedInstance] startMissionExecutionWithCompletion:^(NSError * _Nullable error) {
+            ShowResult(@"Start Mission:%@", error.localizedDescription);
+            if (!error) {
+                weakReturn(target);
+                [target shouldShowStartMissionButton:NO];
+            }else
+            {
+                ShowResult(@"StartMission Failed: %@", error.description);
+            }
+    }];
+}
+
+-(IBAction) onStopMissionButtonAction:(UIButton*)sender
+{
+    
+    weakSelf(target);
+    [[DJIMissionManager sharedInstance] stopMissionExecutionWithCompletion:^(NSError * _Nullable error) {
+        ShowResult(@"Stop Mission:%@", error.localizedDescription);
+        if (!error) {
+            weakReturn(target);
+            [target hideMissionControlButton];
+            target.isMissionRunning = NO;
+        }
+    }];
+}
+
+#pragma mark Custom Methods
+
 -(void) onScreenTouched:(UIGestureRecognizer*)recognizer
 {
     CGPoint point = [recognizer locationInView:self.touchView];
     [self.touchView updatePoint:point andColor:[[UIColor greenColor] colorWithAlphaComponent:0.5]];
     
     point = [DemoUtility pointToStreamSpace:point withView:self.touchView];
-    [self startPointMissionWithPoint:point];
+    [self startTapFlyMissionWithPoint:point];
 }
 
--(IBAction) onSwitchValueChanged:(UISwitch*)sender
-{
-    self.isHorizontalObstacleAvoidanceEnabled = sender.isOn;
-}
-
--(IBAction) onStartStopButtonClicked:(UIButton*)sender
-{
-    // Tag == 100 means Start
-    weakSelf(target);
-    if (sender.tag == 100) {
-        [[DJIMissionManager sharedInstance] startMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-            ShowResult(@"Start Mission:%@", error.localizedDescription);
-            if (!error) {
-                weakReturn(target);
-                [target showStopButton];
-            }
-        }];
-    }
-    else
-    {
-        [[DJIMissionManager sharedInstance] stopMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-            ShowResult(@"Stop Mission:%@", error.localizedDescription);
-            if (!error) {
-                weakReturn(target);
-                [target hideStartStopButton];
-                target.isMissionRunning = NO;
-            }
-        }];
-    }
-}
-
--(void) startPointMissionWithPoint:(CGPoint)point
+-(void) startTapFlyMissionWithPoint:(CGPoint)point
 {
     DJITapFlyMission* tapFlyMission = [[DJITapFlyMission alloc] init];
     tapFlyMission.imageLocationToCalculateDirection = point;
@@ -173,34 +180,28 @@
         }
         else
         {
-            [target showStartButton];
+            [target shouldShowStartMissionButton:YES];
         }
     }];
 }
 
--(void) showStartButton
+//Should Show StartMissionButton and hide StopMissionButton
+- (void) shouldShowStartMissionButton:(BOOL)show
 {
-    if (self.startStopButton.tag != 100 || self.startStopButton.hidden != NO) {
-        self.startStopButton.hidden = NO;
-        self.startStopButton.tag = 100;
-        [self.startStopButton setTitle:@"GO" forState:UIControlStateNormal];
-        [self.startStopButton setBackgroundColor:[UIColor greenColor]];
+    if (show) {
+        self.startMissionBtn.hidden = NO;
+        self.stopMissionBtn.hidden = YES;
+    }else
+    {
+        self.startMissionBtn.hidden = YES;
+        self.stopMissionBtn.hidden = NO;
     }
 }
 
--(void) showStopButton
+-(void) hideMissionControlButton
 {
-    if (self.startStopButton.tag != 200 || self.startStopButton.hidden != NO) {
-        self.startStopButton.hidden = NO;
-        self.startStopButton.tag = 200;
-        [self.startStopButton setTitle:@"X" forState:UIControlStateNormal];
-        [self.startStopButton setBackgroundColor:[UIColor redColor]];
-    }
-}
-
--(void) hideStartStopButton
-{
-    self.startStopButton.hidden = YES;
+    [self.startMissionBtn setHidden:YES];
+    [self.stopMissionBtn setHidden:YES];
 }
 
 #pragma mark - DJICameraDelegate
@@ -218,7 +219,7 @@
 {
     ShowResult(@"Mission Finished:%@", error.localizedDescription);
     [self.touchView updatePoint:INVALID_POINT];
-    [self hideStartStopButton];
+    [self hideMissionControlButton];
     self.isMissionRunning = NO;
 }
 
@@ -235,12 +236,12 @@
         }
         if (status.executionState == DJITapFlyMissionExecutionStateExecuting) {
             [self.touchView updatePoint:point andColor:[[UIColor greenColor] colorWithAlphaComponent:0.5]];
-            [self showStopButton];
+            [self shouldShowStartMissionButton:NO];
         }
         else if (status.executionState == DJITapFlyMissionExecutionStateCannotExecute)
         {
             [self.touchView updatePoint:point andColor:[[UIColor redColor] colorWithAlphaComponent:0.5]];
-            [self showStopButton];
+            [self shouldShowStartMissionButton:NO];
         }
         
         NSLog(@"Direction:{%f, %f, %f} ExecState:%d", status.direction.x, status.direction.y, status.direction.z, (int)status.executionState);
@@ -251,11 +252,6 @@
         [self.logString appendFormat:@"View Point:{%f, %f}\n", point.x, point.y];
         [self.logString appendFormat:@"Error:%@", status.error.localizedDescription];
     }
-}
-
-- (void)gimbalController:(DJIGimbal *)controller didUpdateGimbalState:(DJIGimbalState *)gimbalState
-{
-    self.gimbalState = gimbalState;
 }
 
 @end

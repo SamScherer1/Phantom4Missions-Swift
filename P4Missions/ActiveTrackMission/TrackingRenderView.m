@@ -21,6 +21,8 @@
 
 @implementation TrackingRenderView
 
+#pragma mark - UIResponder Methods
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
     self.isMoved = NO;
@@ -31,8 +33,8 @@
 {
     self.isMoved = YES;
     self.endPoint = [[touches anyObject] locationInView:self];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMovePoint:fromPoint:isFinished:)]) {
-        [self.delegate renderViewDidMovePoint:self.endPoint fromPoint:self.startPoint isFinished:NO];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMoveToPoint:fromPoint:isFinished:)]) {
+        [self.delegate renderViewDidMoveToPoint:self.endPoint fromPoint:self.startPoint isFinished:NO];
     }
 }
 
@@ -40,8 +42,8 @@
 {
     self.endPoint = [[touches anyObject] locationInView:self];
     if (self.isMoved) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMovePoint:fromPoint:isFinished:)]) {
-            [self.delegate renderViewDidMovePoint:self.endPoint fromPoint:self.startPoint isFinished:YES];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMoveToPoint:fromPoint:isFinished:)]) {
+            [self.delegate renderViewDidMoveToPoint:self.endPoint fromPoint:self.startPoint isFinished:YES];
         }
     }
     else
@@ -56,13 +58,13 @@
 {
     self.endPoint = [[touches anyObject] locationInView:self];
     if (self.isMoved) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMovePoint:fromPoint:isFinished:)]) {
-            [self.delegate renderViewDidMovePoint:self.endPoint fromPoint:self.startPoint isFinished:YES];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(renderViewDidMoveToPoint:fromPoint:isFinished:)]) {
+            [self.delegate renderViewDidMoveToPoint:self.endPoint fromPoint:self.startPoint isFinished:YES];
         }
     }
 }
 
--(void) updateRect:(CGRect)rect fillClole:(UIColor*)fillColor
+-(void) updateRect:(CGRect)rect fillColor:(UIColor*)fillColor
 {
     if (CGRectEqualToRect(rect, self.trackingRect)) {
         return;
@@ -95,10 +97,10 @@
     UIColor* strokeColor = [UIColor grayColor];
     CGContextSetStrokeColorWithColor(context, strokeColor.CGColor);
     UIColor* fillColor = self.fillColor;
-    CGContextSetFillColorWithColor(context, fillColor.CGColor);//Fill Color
-    CGContextSetLineWidth(context, 1.8);//线的宽度
+    CGContextSetFillColorWithColor(context, fillColor.CGColor); //Fill Color
+    CGContextSetLineWidth(context, 1.8); //Width of line
     
-    if (self.isDotLine) {
+    if (self.isDottedLine) {
         CGFloat lenghts[] = {10, 10};
         CGContextSetLineDash(context, 0, lenghts, 2);
     }

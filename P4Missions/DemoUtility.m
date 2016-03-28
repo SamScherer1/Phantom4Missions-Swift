@@ -85,6 +85,30 @@ void ShowResult(NSString *format, ...)
     return CGSizeMake(size.width*videoFrame.size.width, size.height*videoFrame.size.height);
 }
 
++ (CGRect) rectToStreamSpace:(CGRect)rect withView:(UIView *)view
+{
+    CGPoint origin = [DemoUtility pointToStreamSpace:rect.origin withView:view];
+    CGSize size = [DemoUtility sizeToStreamSpace:rect.size];
+    return CGRectMake(origin.x, origin.y, size.width, size.height);
+}
+
++ (CGRect) rectFromStreamSpace:(CGRect)rect withView:(UIView *)view
+{
+    CGPoint origin = [DemoUtility pointFromStreamSpace:rect.origin withView:view];
+    CGSize size = [DemoUtility sizeFromStreamSpace:rect.size];
+    return CGRectMake(origin.x, origin.y, size.width, size.height);
+}
+
++ (CGRect) rectWithPoint:(CGPoint)point1 andPoint:(CGPoint)point2
+{
+    CGFloat origin_x = MIN(point1.x, point2.x);
+    CGFloat origin_y = MIN(point1.y, point2.y);
+    CGFloat width = fabs(point1.x - point2.x);
+    CGFloat height = fabs(point1.y - point2.y);
+    CGRect rect = CGRectMake(origin_x, origin_y, width, height);
+    return rect;
+}
+
 + (NSString*) stringFromPointingExecutionState:(DJITapFlyMissionExecutionState)state
 {
     switch (state) {
