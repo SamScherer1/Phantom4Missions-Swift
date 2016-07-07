@@ -1,11 +1,11 @@
 //
 //  DJIStreamCommon.h
-//  DJIWidget
 //
-//  Created by ai.chuyue on 15/3/5.
-//  Copyright (c) 2015年 Jerome.zhang. All rights reserved.
+//  Copyright (c) 2015 DJI. All rights reserved.
 //
 
+#ifndef DJI_STREAM_COMMON_H
+#define DJI_STREAM_COMMON_H
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -29,9 +29,9 @@ typedef struct{
     
     union{
         struct{
-            int has_sps :1; //含有sps信息
-            int has_pps :1; //含有pps信息
-            int has_idr :1; //含有idr帧
+            int has_sps :1;
+            int has_pps :1;
+            int has_idr :1;
         } frame_flag;
         uint32_t value;
     };
@@ -50,9 +50,6 @@ typedef struct{
 
 typedef struct
 {
-    //RGB情况下，这里存储rgb -> luma
-    //yuv_planer 情况下，y->luma, u->chromab, v->chromar
-    //yuv_semiPlaner 情况下， y->luma, crcb->chromab
     uint8_t *luma;
     uint8_t *chromaB;
     uint8_t *chromaR;
@@ -61,11 +58,10 @@ typedef struct
     
     int width, height;
     
-    //slice 数据，如果为0则表示默认内存紧密存放
     int lumaSlice, chromaBSlice, chromaRSlice;
     
     pthread_rwlock_t mutex;
-    void* cv_pixelbuffer_fastupload; //暂留，似乎目前只支持y-uv半平面
+    void* cv_pixelbuffer_fastupload;
     
 
     uint32_t frame_uuid; //frame id from decoder
@@ -113,18 +109,17 @@ typedef enum{
     DJIVideoStreamProcessorType_Modify, //modify data
 } DJIVideoStreamProcessorType;
 
-//264编码器类型枚举
 typedef NS_ENUM(NSUInteger, H264EncoderType){
     H264EncoderType_unknown = 0,
-    H264EncoderType_DM368_inspire = 1, //inspire上的DM368编码
-    H264EncoderType_DM368_longan = 2, //手持云台与inspire使用同样方案
-    H264EncoderType_A9_phantom3c = 4, //phantom3c上的A9相机
-    H264EncoderType_A9_phantom3s = 4, //phantom3s码流
-    H264EncoderType_DM365_phamtom3x = 5, //phantom3x
-    H264EncoderType_1860_phantom4x = 6, //phantom4x
-    H264EncoderType_LightBridge2 = 7, //lb2 dm368
-    H264EncoderType_A9_P3_W = 8, //p3w wifi
-    H264EncoderType_A9_OSMO_NO_368 = 9, //去368方案的osmo+A9+X3相机
+    H264EncoderType_DM368_inspire = 1,
+    H264EncoderType_DM368_longan = 2,
+    H264EncoderType_A9_phantom3c = 4,
+    H264EncoderType_A9_phantom3s = 4,
+    H264EncoderType_DM365_phamtom3x = 5,
+    H264EncoderType_1860_phantom4x = 6,
+    H264EncoderType_LightBridge2 = 7,
+    H264EncoderType_A9_P3_W = 8,
+    H264EncoderType_A9_OSMO_NO_368 = 9,
 };
 
 /**
@@ -133,20 +128,16 @@ typedef NS_ENUM(NSUInteger, H264EncoderType){
 @protocol VideoStreamProcessor <NSObject>
 @required
 /**
- * 启用
+ *  Enables the stream processor.
  */
 -(BOOL) streamProcessorEnabled;
 
 -(DJIVideoStreamProcessorType) streamProcessorType;
-/**
- *  @return 处理成功/失败
- */
+
 -(BOOL) streamProcessorHandleFrame:(uint8_t*)data size:(int)size;
 -(BOOL) streamProcessorHandleFrameRaw:(VideoFrameH264Raw*)frame;
 @optional
-/**
- *  流基本信息发生了变化，解码器... etc需要在内部重新配置
- */
+
 -(void) streamProcessorInfoChanged:(DJIVideoStreamBasicInfo*)info;
 -(void) streamProcessorPause;
 -(void) streamProcessorReset;
@@ -157,10 +148,10 @@ typedef NS_ENUM(NSUInteger, H264EncoderType){
  */
 @protocol VideoFrameProcessor <NSObject>
 @required
-/**
- * 启用
- */
+
 -(BOOL) videoProcessorEnabled;
 -(void) videoProcessFrame:(VideoFrameYUV*)frame;
 -(void) videoProcessFailedFrame;
 @end
+
+#endif /* DJIVTH264DecoderPublic_h */

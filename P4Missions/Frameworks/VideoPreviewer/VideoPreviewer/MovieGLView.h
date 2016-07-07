@@ -9,9 +9,9 @@
 //  this file is part of KxMovie
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 #import <UIKit/UIKit.h>
-#import "DJIStreamCommon.h"
 #include <sys/types.h>
 
+#import "DJIStreamCommon.h"
 
 #define THUMBNAIL_ENABLE (1)
 #define THUMBNAIL_IMAGE_WIDTH (154)

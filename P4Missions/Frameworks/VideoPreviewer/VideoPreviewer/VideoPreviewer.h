@@ -1,17 +1,17 @@
 //
 //  VideoPreviewer.h
-//  DJIOSD
 //
-//  Created by app on 13-10-25.
-//  Copyright (c) 2013年 Jerome. All rights reserved.
+//  Copyright (c) 2013 DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "DJIStreamCommon.h"
 #import "VideoFrameExtractor.h"
-#import "MovieGLView.h"
 #import "VideoPreviewerQueue.h"
 #import "H264VTDecode.h"
+#import "DJIStreamCommon.h"
+#import "MovieGLView.h"
+#import "SoftwareDecodeProcessor.h"
+#import "LB2AUDHackParser.h"
 
 #define VIDEO_PREVIEWER_DISPATCH "video_preview_create_thread_dispatcher"
 #define VIDEO_PREVIEWER_EVEN_NOTIFICATIOIN @"video_preview_even_notification"

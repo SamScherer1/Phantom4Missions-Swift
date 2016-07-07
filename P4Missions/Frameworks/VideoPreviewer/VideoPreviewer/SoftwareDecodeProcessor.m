@@ -1,9 +1,7 @@
 //
 //  SoftwareDecodeProcessor.m
-//  DJIWidget
 //
-//  Created by ai.chuyue on 15/3/5.
-//  Copyright (c) 2015年 Jerome.zhang. All rights reserved.
+//  Copyright (c) 2015 DJI. All rights reserved.
 //
 
 #import "SoftwareDecodeProcessor.h"
@@ -49,9 +47,7 @@
 -(BOOL) streamProcessorHandleFrameRaw:(VideoFrameH264Raw *)frame{
     __block BOOL decodeSuccess = YES;
     __weak SoftwareDecodeProcessor* weakself = self;
-    
-    NSLog(@"software decoder working. "); 
-    
+        
     [_extractor decodeRawFrame:frame callback:^(BOOL hasPicture) {
         if (!weakself) {
             return;

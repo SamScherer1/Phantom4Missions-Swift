@@ -1,9 +1,7 @@
 //
 //  VideoPreviewer.m
-//  DJIOSD
 //
-//  Created by app on 13-10-25.
-//  Copyright (c) 2013年 Jerome. All rights reserved.
+//  Copyright (c) 2013 DJI. All rights reserved.
 //
 
 #import "VideoPreviewer.h"
@@ -23,33 +21,32 @@
 #endif
 
 @interface VideoPreviewer () <H264DecoderOutput, LB2AUDHackParserDelegate>{
-    NSThread *_decodeThread;    //解码线程
-    MovieGLView *_glView;   //OpenGL渲染层
+    NSThread *_decodeThread;
+    MovieGLView *_glView;
     
     BOOL videoDecoderCanReset;
     int videoDecoderFailedCount;
-    int safe_resume_skip_count; //硬件解码在safe_resume中应当跳过的帧数
+    int safe_resume_skip_count;
     
     DJIVideoStreamBasicInfo _stream_basic_info;
     pthread_mutex_t _processor_mutex;
-    pthread_mutex_t _render_mutex; //mutex用于对渲染进行保护，防止在后台进行openGL调用
+    pthread_mutex_t _render_mutex;
     
-    long long _lastDataInputTime; //最后一次收到数据的时间
-    long long _lastFrameDecodedTime; //最后一次解码出可用帧的时间
+    long long _lastDataInputTime;
+    long long _lastFrameDecodedTime;
 }
 
-//启用硬件解码
 @property (assign, nonatomic) BOOL enableHardwareDecode;
-//用于选择264码流模式，默认为inspire
+
 @property (assign,nonatomic) H264EncoderType encoderType;
 
 //hardware decode use videotool box on ios8
 @property (strong, nonatomic) H264VTDecode *hw_decoder;
 //software decoder use ffmpeg
 @property (strong, nonatomic) SoftwareDecodeProcessor* soft_decoder;
-//解码器当前状态
+
 @property (assign, nonatomic) VideoDecoderStatus decoderStatus;
-//当前输出的帧的格式
+
 @property (assign, nonatomic) VPFrameType frameOutputType;
 //stream processor list
 @property (strong, nonatomic) NSMutableArray* stream_processor_list;
@@ -57,7 +54,7 @@
 @property (assign, nonatomic) BOOL grayOutPause;
 
 
-//移除lb2中多出的aud
+//remove the redundant aud in LB2's stream
 @property (strong, nonatomic) LB2AUDHackParser* lb2Hack;
 @end
 
@@ -71,7 +68,6 @@
     self= [super init];
     
     memset(&_stream_basic_info, 0, sizeof(_stream_basic_info));
-    //默认为inspire的码流
     _stream_basic_info.frameRate = 30;
     _stream_basic_info.encoderType = H264EncoderType_DM368_inspire;
     
@@ -98,11 +94,9 @@
     
     _decoderStatus = VideoDecoderStatus_Normal;
     
-    //软解码器
     _soft_decoder = [[SoftwareDecodeProcessor alloc] initWithExtractor:_videoExtractor];
     _soft_decoder.frameProcessor = self;
     
-    //模拟器硬件解码会卡在回调处
 #if !TARGET_IPHONE_SIMULATOR
     
     if ((NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1)) {
@@ -116,10 +110,6 @@
     [self registStreamProcessor:_hw_decoder];
     
     //rtmp server
-//    DJIRtmpMuxer* rtmpServer = [DJIRtmpMuxer instance];
-//    [self registStreamProcessor:rtmpServer];
-    
-    //默认使用inspire模式
     self.encoderType = H264EncoderType_DM368_inspire;
     
     //lb2 hack
@@ -152,24 +142,6 @@
 }
 
 -(void) lb2AUDHackParser:(id)parser didParsedData:(void *)data size:(int)size{
-//    
-//    {
-//        static FILE* dump = nil;
-//        if (!dump) {
-//            NSArray* doucuments = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//            NSString* filePath = [doucuments objectAtIndex:0];
-//            
-//            filePath = [filePath stringByAppendingPathComponent:@"dump_out.bin"];
-//            dump = fopen([filePath UTF8String], "wb");
-//        }
-//        
-//        if (dump) {
-//            fwrite(data, size, 1, dump);
-//            fflush(dump);
-//        }
-//        return;
-//    }
-    
     [_videoExtractor parseVideo:data length:size withFrame:^(VideoFrameH264Raw *frame) {
         if (!frame) {
             return;
@@ -208,7 +180,6 @@
     _lastDataInputTime = [self getTickCount]; // status purpose only
     if (_status.isRunning) {
         if (_encoderType == H264EncoderType_LightBridge2) {
-            //lb2要移除多余的aud
             [_lb2Hack parse:videoData inSize:len];
         }else{
             [_videoExtractor parseVideo:videoData length:len withFrame:^(VideoFrameH264Raw *frame) {
@@ -333,12 +304,12 @@
 - (void)resume{
     BEGIN_DISPATCH_QUEUE
     _status.isPause = NO;
-    NSLog(@"恢复图像解码");
+    NSLog(@"Resume the decoding");
     END_DISPATCH_QUEUE
 }
 
 - (void)safeResume{
-    NSLog(@"begin safe resume");
+    NSLog(@"Try safe resuming");
     safe_resume_skip_count = 25;
     [self resume];
 }
@@ -351,8 +322,7 @@
     BEGIN_DISPATCH_QUEUE
     _status.isPause = YES;
     _grayOutPause = isGrayout;
-    NSLog(@"暂停解码");
-    //唤醒等待的线程，将会立即渲染一张黑白图像
+    NSLog(@"Pause decoding");
     [self.dataQueue wakeupReader];
     
     for (id<VideoStreamProcessor> processor in _stream_processor_list) {
@@ -521,7 +491,7 @@
 
 #pragma mark - private
 - (void)enterBackground{
-    //这里的加锁的意义在于，iOS不允许app在后台使用openGL调用，这里需要确保所有openGL指令完成后，才允许主线程完成run loop，app进入后台
+    //It is not allowed to call OpenGL's interface in the background. Ensure all work is done before entering the background.
     pthread_mutex_lock(&_render_mutex);
     NSLog(@"videoPreviewer background");
     _status.isBackground = YES;
@@ -731,7 +701,6 @@
     _lastFrameDecodedTime = [self getTickCount];
     
     if (safe_resume_skip_count || _status.isPause) {
-        //解码需要跳过一定的帧数
         return;
     }
     

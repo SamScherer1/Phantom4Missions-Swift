@@ -410,6 +410,9 @@ ss += ll; \
         av_log_set_level(AV_LOG_QUIET);
         
         pCodec = avcodec_find_decoder(AV_CODEC_ID_H264);
+        if (pCodec == NULL) {
+            return;
+        }
         _pCodecCtx = avcodec_alloc_context3(pCodec);
         _pFrame = av_frame_alloc();
         _pCodecPaser = av_parser_init(AV_CODEC_ID_H264);

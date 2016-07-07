@@ -1,11 +1,10 @@
 //
 //  H264VTDecode.h
-//  H264DecodeTest
 //
-//  Created by ai.chuyue on 14-10-20.
-//  Copyright (c) 2014年 ai.chuyue. All rights reserved.
+//  Copyright (c) 2014 DJI. All rights reserved.
 //
-
+#ifndef H264_VT_DECODE_H
+#define H264_VT_DECODE_H
 #import <AVFoundation/AVFoundation.h>
 #import <VideoToolbox/VideoToolbox.h>
 #import <Foundation/Foundation.h>
@@ -14,9 +13,9 @@
 //interface for 264 decoder
 @protocol H264DecoderOutput <NSObject>
 @optional
-//异步解码完成
+// called when the frame decompression is finished
 -(void) decompressedFrame:(CVImageBufferRef)image frameInfo:(VideoFrameH264Raw*)frame;
-//出现异常情况时，调用此方法来告知硬件解码器不可用
+// called when hardware decoder encounters exception.
 -(void) hardwareDecoderUnavailable;
 @end
 
@@ -44,35 +43,23 @@
     int au_size;
     int au_nal_count;
     
-    //解码帧计数
     int _income_frame_count;
-    //解码器重新创建次数
     int _decoder_create_count;
 }
 
 //CVImageBuffer output delegate
 @property (nonatomic, weak) id<H264DecoderOutput> delegate;
-//启用标志
 @property (nonatomic, assign) BOOL enabled;
-//编码器模式，用于选择i帧
 @property (assign, nonatomic) NSInteger encoderType;
-//硬件解码器不可用
 @property (nonatomic, assign) BOOL hardware_unavailable;
 
 /***
- decode function
- in: a complete h264 frame from ffmpeg av_parser_parse2
- out: YES for decode success
- ***/
-//-(BOOL) decodeCompleteFrame:(uint8_t*)data Size:(int)size;
-
-/***
- reset decode context, 只能在解码线程相同的线程中使用
+ reset decode context. Can only be used in the decoder thread.
  ***/
 -(void) resetInDecodeThread;
 
 /**
- * 在之后的解码过程中释放，可用于不同线程
+ * Resets the video previewer, but it is not executed until it is safe to do so. It can be called in different thread.
  **/
 -(void) resetLater;
 
@@ -83,7 +70,9 @@
 -(UIImage *) convertFromCVImageBuffer:(CVImageBufferRef)imageBuffer savePath:(NSString*)path;
 
 /**
- *  迫使解码器输出全部帧
+ *  FLush all the frame in the video previewer's queue. 
  */
 -(void) dequeueAllFrames;
 @end
+#endif
+

@@ -9,14 +9,13 @@
 //  this file is part of KxMovie
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 
-#import "MovieGLView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
-
 #include <pthread.h>
+#import "MovieGLView.h"
 
 #define INFO(fmt, ...) NSLog(@"[GLView]"fmt, ##__VA_ARGS__)
 #define ERROR(fmt, ...) NSLog(@"[GLView]"fmt, ##__VA_ARGS__)
@@ -564,19 +563,15 @@ void glGenTextureFromFramebuffer(GLuint *t, GLuint *f, GLsizei w, GLsizei h)
 }
 
 - (BOOL)adjustSize{
-    //可能从非渲染线程进入，这里不要调用任何GL代码
-    
     if(self.superview==nil)return NO;
     CGRect adjustFrame = self.frame;
     CGSize superSize = self.superview.frame.size;
     CGSize contentSize = CGSizeMake(_inputWidth, _inputHeight);
     if (_inputHeight == 0 || _inputWidth == 0) {
-        //防除0
         contentSize = superSize;
     }
 
     if(_type == MovieGLViewTypeAutoAdjust){
-        //    NSLog(@"获取到的帧高度为:%.0f 宽度为:%.0f 当前父视图高度为:%.0f 宽度为:%0.f",_inputHeight,_inputWidth,superSize.height,superSize.width);
         if(superSize.width * contentSize.height != superSize.height * contentSize.width){
             if(superSize.width* contentSize.height < superSize.height * contentSize.width){
                 
@@ -591,7 +586,6 @@ void glGenTextureFromFramebuffer(GLuint *t, GLuint *f, GLsizei w, GLsizei h)
         }
     }
     else if(_type == MovieGLViewTypeFullWindow){
-        //    NSLog(@"获取到的帧高度为:%.0f 宽度为:%.0f 当前父视图高度为:%.0f 宽度为:%0.f",_inputHeight,_inputWidth,superSize.height,superSize.width);
         if(superSize.width*contentSize.height!=superSize.height*contentSize.width){
             if(superSize.width*contentSize.height < superSize.height*contentSize.width){
                 adjustFrame = CGRectMake((superSize.width - superSize.height/contentSize.height*contentSize.width)*0.5, 0, superSize.height/contentSize.height*contentSize.width, superSize.height);

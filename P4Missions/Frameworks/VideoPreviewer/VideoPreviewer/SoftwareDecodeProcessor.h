@@ -1,9 +1,7 @@
 //
 //  SoftwareDecodeProcessor.h
-//  DJIWidget
 //
-//  Created by ai.chuyue on 15/3/5.
-//  Copyright (c) 2015年 Jerome.zhang. All rights reserved.
+//  Copyright (c) 2015 DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -13,7 +13,7 @@ typedef enum : NSUInteger {
 
 #define DATA_BUFFER_SIZE (4096)
 static const uint8_t g_LB2AUDHackParser_aud[] = {0x09, 0x10};
-static const uint8_t g_LB2AUDHackParser_filter[] = {0x00, 0x00, 0x00, 0x01, 0x0c};
+/*static const uint8_t g_LB2AUDHackParser_filter[] = {0x00, 0x00, 0x00, 0x01, 0x0c};*/
 
 @interface LB2AUDHackParser (){
     uint8_t* dataBuffer;
@@ -95,12 +95,12 @@ static const uint8_t g_LB2AUDHackParser_filter[] = {0x00, 0x00, 0x00, 0x01, 0x0c
         }
         else if(_status == LB2AUDHackParserStatus_SeekFilter){
             //search filter
-            if ((!REMOVE_ALL_AUD) && current_byte == g_LB2AUDHackParser_filter[_seekFilterPos]) {
-                _seekFilterPos++;
+            if ((!REMOVE_ALL_AUD) /*&& current_byte == g_LB2AUDHackParser_filter[_seekFilterPos]*/) {
+               /* _seekFilterPos++;
                 if (_seekFilterPos == sizeof(g_LB2AUDHackParser_filter)) {
                     // filter found. Keep the aud found before.
                     self.status = LB2AUDHackParserStatus_SeekNAL;
-                }
+                }*/
             }else{
                 //It is not a filer. Remove the aud found before
                 if (workOffset > _seekFilterPos + 6) {

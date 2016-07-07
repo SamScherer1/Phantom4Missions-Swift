@@ -1,37 +1,35 @@
 //
 //  VideoPreviewerQueue.m
-//  DJIOSD
 //
-//  Created by Jerome.zhang on 13-11-13.
-//  Copyright (c) 2013年 Jerome. All rights reserved.
+//  Copyright (c) 2013 DJI. All rights reserved.
 //
 
 #import "VideoPreviewerQueue.h"
 #import <sys/time.h>
 
 /**
- *  队列的节点
+ *  A node in the queue
  */
 typedef struct{
     uint8_t *ptr;
     int size;
 }DJILinkNode;
 
+/**
+ *  The queue is a node based linked list. It used the producer-consumer pattern and it is thread safe.
+ */
 @interface VideoPreviewerQueue()
 {
     //node
     DJILinkNode *_node;
-    //指针总数
+    // total size of the queue
     int _size;
-    //指针数量
+    // number of nodes
     int _count;
-    //指针头
     int _head;
     int _tail;
     
-    //队列锁
     pthread_mutex_t _mutex;
-    //互斥锁
     pthread_cond_t _cond;
 }
 @end
@@ -53,9 +51,6 @@ typedef struct{
     return self;
 }
 
-// No dealloc here to release _node, mutex and cond. 
-
-//清空队列，在此期间队列加锁
 - (void)clear{
     pthread_mutex_lock(&_mutex);
     int idx = 0;
@@ -78,7 +73,6 @@ typedef struct{
     pthread_mutex_unlock(&_mutex);
 }
 
-//进队列(返回值为No时队列满,长度为0或buf为NULL也返回NO)
 - (BOOL)push:(uint8_t *)buf length:(int)len{
     pthread_mutex_lock(&_mutex);
     if(len==0 || buf==NULL || [self isFull]){
@@ -98,7 +92,6 @@ typedef struct{
     return YES;
 }
 
-//出队列(返回值为NULL时队列为空)
 - (uint8_t *)pull:(int *)len{
     pthread_mutex_lock(&_mutex);
     if(_count == 0)
@@ -127,7 +120,6 @@ typedef struct{
     return tmp;
 }
 
-//立即唤醒等待的读取线程
 - (void)wakeupReader{
     pthread_mutex_lock(&_mutex);
     pthread_cond_signal(&_cond);
@@ -142,7 +134,6 @@ typedef struct{
     return _size;
 }
 
-//是否已满
 - (bool)isFull{
     if(_count==_size){
         return YES;
