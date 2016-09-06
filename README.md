@@ -8,7 +8,7 @@ From this demo, you will learn how to use the TapFly and ActiveTrack Missions of
 
  - iOS 8.0+
  - Xcode 7.0+
- - DJI iOS SDK 3.2
+ - DJI iOS SDK 3.3
 
 ## Tutorial
 
