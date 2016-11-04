@@ -35,7 +35,6 @@
 {
     [super viewWillAppear:animated];
     
-    [[VideoPreviewer instance] setDecoderWithProduct:[DJISDKManager product] andDecoderType:VideoPreviewerDecoderTypeSoftwareDecoder];
     [[VideoPreviewer instance] setView:self.fpvView];
     
     [DJIMissionManager sharedInstance].delegate = self;

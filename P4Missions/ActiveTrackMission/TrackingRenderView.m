@@ -54,7 +54,7 @@
     }
 }
 
-- (void)touchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.endPoint = [[touches anyObject] locationInView:self];
     if (self.isMoved) {

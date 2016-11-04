@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A41056031D2E3AA8001DA8CA /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A41055FE1D2E2F42001DA8CA /* VideoPreviewer.framework */; };
-		A41056041D2E3AA8001DA8CA /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A41055FE1D2E2F42001DA8CA /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A41940991DCB69080076478C /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A41940981DCB68FD0076478C /* VideoPreviewer.framework */; };
+		A419409A1DCB69080076478C /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A41940981DCB68FD0076478C /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A438D3331C97E3270003D129 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3321C97E3270003D129 /* main.m */; };
 		A438D3361C97E3270003D129 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3351C97E3270003D129 /* AppDelegate.m */; };
 		A438D3421C97E3270003D129 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A438D3401C97E3270003D129 /* Main.storyboard */; };
@@ -16,28 +16,27 @@
 		A438D3471C97E3270003D129 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A438D3451C97E3270003D129 /* LaunchScreen.storyboard */; };
 		A438D3521C97E3270003D129 /* P4MissionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3511C97E3270003D129 /* P4MissionsTests.m */; };
 		A438D3631C97E4CA0003D129 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3621C97E4CA0003D129 /* RootViewController.m */; };
-		A438D3A01C97EAD60003D129 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A438D39F1C97EAD60003D129 /* DJISDK.framework */; };
 		A438D4EF1C9948850003D129 /* DemoUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4EE1C9948850003D129 /* DemoUtility.m */; };
 		A438D4F81C994B590003D129 /* ActiveTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4F41C994B590003D129 /* ActiveTrackViewController.m */; };
 		A438D4FC1C994B800003D129 /* TrackingRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FB1C994B800003D129 /* TrackingRenderView.m */; };
 		A438D4FF1C994B880003D129 /* PointingTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FE1C994B880003D129 /* PointingTouchView.m */; };
 		A438D5171C9953030003D129 /* TapFlyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D5161C9953030003D129 /* TapFlyViewController.m */; };
 		A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C539A71C9954A200757368 /* Foundation.framework */; };
-		A4C53A251C99566000757368 /* DJISDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A438D39F1C97EAD60003D129 /* DJISDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A4C53A331C9C3D7D00757368 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C53A321C9C3D7D00757368 /* StatusViewController.m */; };
+		F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A41055FD1D2E2F42001DA8CA /* PBXContainerItemProxy */ = {
+		A41940971DCB68FD0076478C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A41055F91D2E2F42001DA8CA /* VideoPreviewer.xcodeproj */;
+			containerPortal = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 02A543FD1C3C51CB0083C11B;
 			remoteInfo = VideoPreviewer;
 		};
-		A41056051D2E3AA8001DA8CA /* PBXContainerItemProxy */ = {
+		A419409B1DCB69080076478C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A41055F91D2E2F42001DA8CA /* VideoPreviewer.xcodeproj */;
+			containerPortal = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 02A543FC1C3C51CB0083C11B;
 			remoteInfo = VideoPreviewer;
@@ -58,8 +57,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A41056041D2E3AA8001DA8CA /* VideoPreviewer.framework in Embed Frameworks */,
-				A4C53A251C99566000757368 /* DJISDK.framework in Embed Frameworks */,
+				A419409A1DCB69080076478C /* VideoPreviewer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,7 +65,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A41055F91D2E2F42001DA8CA /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
+		A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
+		A41940A31DCB76970076478C /* P4Missions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = P4Missions.entitlements; sourceTree = "<group>"; };
 		A438D32E1C97E3270003D129 /* P4Missions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P4Missions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A438D3321C97E3270003D129 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A438D3341C97E3270003D129 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		A438D3531C97E3270003D129 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A438D3611C97E4CA0003D129 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		A438D3621C97E4CA0003D129 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		A438D39F1C97EAD60003D129 /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DJISDK.framework; sourceTree = "<group>"; };
 		A438D4ED1C9948850003D129 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
 		A438D4EE1C9948850003D129 /* DemoUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoUtility.m; sourceTree = "<group>"; };
 		A438D4F31C994B590003D129 /* ActiveTrackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveTrackViewController.h; sourceTree = "<group>"; };
@@ -95,6 +93,9 @@
 		A4C539A71C9954A200757368 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4C53A311C9C3D7D00757368 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
 		A4C53A321C9C3D7D00757368 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
+		ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-P4Missions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B668C4A12A035B70823C15F3 /* Pods-P4Missions.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P4Missions.debug.xcconfig"; path = "Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions.debug.xcconfig"; sourceTree = "<group>"; };
+		E99BB34A48ABE875CD06AFB6 /* Pods-P4Missions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P4Missions.release.xcconfig"; path = "Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +104,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */,
-				A438D3A01C97EAD60003D129 /* DJISDK.framework in Frameworks */,
-				A41056031D2E3AA8001DA8CA /* VideoPreviewer.framework in Frameworks */,
+				F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */,
+				A41940991DCB69080076478C /* VideoPreviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,10 +119,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A41055FA1D2E2F42001DA8CA /* Products */ = {
+		5F7989BF9952BA868671B213 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A41055FE1D2E2F42001DA8CA /* VideoPreviewer.framework */,
+				A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */,
+				ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A41940941DCB68FD0076478C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A41940981DCB68FD0076478C /* VideoPreviewer.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +142,8 @@
 				A438D3301C97E3270003D129 /* P4Missions */,
 				A438D3501C97E3270003D129 /* P4MissionsTests */,
 				A438D32F1C97E3270003D129 /* Products */,
+				AFEDF01D144050E76A8AE20F /* Pods */,
+				5F7989BF9952BA868671B213 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,6 +159,7 @@
 		A438D3301C97E3270003D129 /* P4Missions */ = {
 			isa = PBXGroup;
 			children = (
+				A41940A31DCB76970076478C /* P4Missions.entitlements */,
 				A438D3341C97E3270003D129 /* AppDelegate.h */,
 				A438D3351C97E3270003D129 /* AppDelegate.m */,
 				A438D3611C97E4CA0003D129 /* RootViewController.h */,
@@ -187,9 +200,7 @@
 		A438D39E1C97EAD60003D129 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A41055F91D2E2F42001DA8CA /* VideoPreviewer.xcodeproj */,
 				A4C539A71C9954A200757368 /* Foundation.framework */,
-				A438D39F1C97EAD60003D129 /* DJISDK.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -216,6 +227,15 @@
 			path = TapFlyMission;
 			sourceTree = "<group>";
 		};
+		AFEDF01D144050E76A8AE20F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B668C4A12A035B70823C15F3 /* Pods-P4Missions.debug.xcconfig */,
+				E99BB34A48ABE875CD06AFB6 /* Pods-P4Missions.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,15 +243,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A438D3561C97E3270003D129 /* Build configuration list for PBXNativeTarget "P4Missions" */;
 			buildPhases = (
+				D7165D1E493C71930C251E8F /* [CP] Check Pods Manifest.lock */,
 				A438D32A1C97E3270003D129 /* Sources */,
 				A438D32B1C97E3270003D129 /* Frameworks */,
 				A438D32C1C97E3270003D129 /* Resources */,
 				A4C53A261C99566000757368 /* Embed Frameworks */,
+				F2DE99B88CFD8A07D1735642 /* [CP] Embed Pods Frameworks */,
+				DE999B0AEDD26EFEA69CB317 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A41056061D2E3AA8001DA8CA /* PBXTargetDependency */,
+				A419409C1DCB69080076478C /* PBXTargetDependency */,
 			);
 			name = P4Missions;
 			productName = P4Missions;
@@ -267,7 +290,11 @@
 				TargetAttributes = {
 					A438D32D1C97E3270003D129 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 7UL3LRJL93;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 					A438D34C1C97E3270003D129 = {
 						CreatedOnToolsVersion = 7.2;
@@ -288,8 +315,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A41055FA1D2E2F42001DA8CA /* Products */;
-					ProjectRef = A41055F91D2E2F42001DA8CA /* VideoPreviewer.xcodeproj */;
+					ProductGroup = A41940941DCB68FD0076478C /* Products */;
+					ProjectRef = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -301,11 +328,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A41055FE1D2E2F42001DA8CA /* VideoPreviewer.framework */ = {
+		A41940981DCB68FD0076478C /* VideoPreviewer.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = VideoPreviewer.framework;
-			remoteRef = A41055FD1D2E2F42001DA8CA /* PBXContainerItemProxy */;
+			remoteRef = A41940971DCB68FD0076478C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -329,6 +356,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D7165D1E493C71930C251E8F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE999B0AEDD26EFEA69CB317 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2DE99B88CFD8A07D1735642 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A438D32A1C97E3270003D129 /* Sources */ = {
@@ -358,10 +433,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A41056061D2E3AA8001DA8CA /* PBXTargetDependency */ = {
+		A419409C1DCB69080076478C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VideoPreviewer;
-			targetProxy = A41056051D2E3AA8001DA8CA /* PBXContainerItemProxy */;
+			targetProxy = A419409B1DCB69080076478C /* PBXContainerItemProxy */;
 		};
 		A438D34F1C97E3270003D129 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -474,14 +549,16 @@
 		};
 		A438D3571C97E3270003D129 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B668C4A12A035B70823C15F3 /* Pods-P4Missions.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = P4Missions/P4Missions.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/P4Missions",
-					"$(PROJECT_DIR)/P4Missions/Frameworks",
+					"$(PROJECT_DIR)/../VideoPreviewer",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -499,14 +576,16 @@
 		};
 		A438D3581C97E3270003D129 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E99BB34A48ABE875CD06AFB6 /* Pods-P4Missions.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = P4Missions/P4Missions.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/P4Missions",
-					"$(PROJECT_DIR)/P4Missions/Frameworks",
+					"$(PROJECT_DIR)/../VideoPreviewer",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
