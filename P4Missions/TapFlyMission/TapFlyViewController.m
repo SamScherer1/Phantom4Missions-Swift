@@ -9,9 +9,9 @@
 #import "TapFlyViewController.h"
 #import "PointingTouchView.h"
 #import "DemoUtility.h"
-#import "StatusViewController.h"
+#import "DJIScrollView.h"
 
-@interface TapFlyViewController () <DJICameraDelegate, DJIMissionManagerDelegate>
+@interface TapFlyViewController () <DJICameraDelegate, DJIVideoFeedListener>
 
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet PointingTouchView *touchView;
@@ -19,11 +19,15 @@
 @property (weak, nonatomic) IBOutlet UIButton* stopMissionBtn;
 @property (weak, nonatomic) IBOutlet UILabel* speedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *horiObstacleAvoidLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *bypassSwitcher;
+@property (weak, nonatomic) IBOutlet UISlider *speedSlider;
 
-@property (nonatomic, assign) BOOL isHorizontalObstacleAvoidanceEnabled;
+@property (weak, nonatomic) DJIScrollView* statusView;
 @property (nonatomic, assign) BOOL isMissionRunning;
 @property (nonatomic, assign) float speed;
 @property (nonatomic, strong) NSMutableString *logString;
+@property (nonatomic, strong) DJITapFlyMission* tapFlyMission;
+@property (nonatomic) NSError *previousError;
 
 @end
 
@@ -36,16 +40,24 @@
     [super viewWillAppear:animated];
     
     [[VideoPreviewer instance] setView:self.fpvView];
-    
-    [DJIMissionManager sharedInstance].delegate = self;
-    
+        
     DJICamera* camera = [DemoUtility fetchCamera];
     if (camera) {
         camera.delegate = self;
     }
     
+    [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     [[VideoPreviewer instance] start];
 
+    [self updateBypassStatus];
+    [self updateSpeedSlider];
+    
+    if ([self isMissionRunning]) {
+        [self shouldShowStartMissionButton:NO];
+    }
+    else {
+        [self hideMissionControlButton];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -53,7 +65,7 @@
     [super viewWillDisappear:animated];
     
     [[VideoPreviewer instance] unSetView];
-    [[VideoPreviewer instance] setView:nil];
+    [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
 
 }
 
@@ -62,11 +74,8 @@
 
     self.title = @"TapFly Mission";
     
-    // Do any additional setup after loading the view from its nib.
     self.logString = [NSMutableString string];
     self.speed = 5.0;
-    self.isMissionRunning = NO;
-    self.isHorizontalObstacleAvoidanceEnabled = NO;
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onScreenTouched:)];
     [self.touchView addGestureRecognizer:tapGesture];
     
@@ -79,14 +88,18 @@
     self.stopMissionBtn.layer.borderColor = [UIColor blueColor].CGColor;
     self.stopMissionBtn.layer.borderWidth = 1.2;
     self.stopMissionBtn.layer.masksToBounds = YES;
+
+    [self.speedLabel setTextColor:[UIColor whiteColor]];
+    [self.horiObstacleAvoidLabel setTextColor:[UIColor whiteColor]];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self.speedLabel setTextColor:[UIColor blackColor]];
-        [self.horiObstacleAvoidLabel setTextColor:[UIColor blackColor]];
-    }else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        [self.speedLabel setTextColor:[UIColor whiteColor]];
-        [self.horiObstacleAvoidLabel setTextColor:[UIColor whiteColor]];
-    }
+    self.statusView = [DJIScrollView viewWithViewController:self];
+    self.statusView.fontSize = 18;
+
+    weakSelf(target);
+    [[self missionOperator] addListenerToEvents:self withQueue:dispatch_get_main_queue() andBlock:^(DJITapFlyMissionEvent * _Nonnull event) {
+        weakReturn(target);
+        [target didReceiveEvent:event];
+    }];
     
 }
 
@@ -95,65 +108,118 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark UIViewController Delegate Methods
+#pragma mark Custom Methods
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    StatusViewController *statusVC = (StatusViewController *)segue.destinationViewController;
-    [statusVC setStatusText:self.logString];
+- (DJITapFlyMissionOperator *) missionOperator {
+    return [DJISDKManager missionControl].tapFlyMissionOperator;
 }
 
-#pragma mark IBAction Methods
-
--(IBAction) onSliderValueChanged:(UISlider*)slider
-{
-    float speed = slider.value * 10;
-    self.speed = speed;
-    self.speedLabel.text = [NSString stringWithFormat:@"%0.1fm/s", speed];
-    if (self.isMissionRunning) {
-        [DJITapFlyMission setAutoFlightSpeed:self.speed withCompletion:^(NSError * _Nullable error) {
-            if (error) {
-                NSLog(@"Set TapFly Auto Flight Speed:%0.1f Error:%@", speed, error.localizedDescription);
-            }
-        }];
-    }
+- (BOOL)isExecutingState:(DJITapFlyMissionState)state {
+    return (state == DJITapFlyMissionStateExecutionResetting ||
+            state == DJITapFlyMissionStateExecutionPaused ||
+            state == DJITapFlyMissionStateExecuting);
 }
 
--(IBAction) onSwitchValueChanged:(UISwitch*)sender
-{
-    self.isHorizontalObstacleAvoidanceEnabled = sender.isOn;
+- (BOOL)isMissionRunning {
+    return [self isExecutingState:[self missionOperator].currentState];
 }
 
--(IBAction) onStartMissionButtonAction:(UIButton*)sender
-{
+-(void)updateBypassStatus {
     weakSelf(target);
-    [[DJIMissionManager sharedInstance] startMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-            ShowResult(@"Start Mission:%@", error.localizedDescription);
-            if (!error) {
-                weakReturn(target);
-                [target shouldShowStartMissionButton:NO];
-            }else
-            {
-                ShowResult(@"StartMission Failed: %@", error.description);
-            }
-    }];
-}
-
--(IBAction) onStopMissionButtonAction:(UIButton*)sender
-{
-    
-    weakSelf(target);
-    [[DJIMissionManager sharedInstance] stopMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-        ShowResult(@"Stop Mission:%@", error.localizedDescription);
-        if (!error) {
-            weakReturn(target);
-            [target hideMissionControlButton];
-            target.isMissionRunning = NO;
+    [[self missionOperator] getHorizontalObstacleBypassEnabledWithCompletion:^(BOOL boolean, NSError * _Nullable error) {
+        weakReturn(target);
+        if (error) {
+            ShowResult(@"Get Horizontal Bypass failed: %@", error.description);
+        }
+        else {
+            target.bypassSwitcher.on = boolean;
         }
     }];
 }
 
-#pragma mark Custom Methods
+-(void)updateSpeedSlider {
+    weakSelf(target);
+    [[self missionOperator] getAutoFlightSpeedWithCompletion:^(float floatValue, NSError * _Nullable error) {
+        weakReturn(target);
+        if (error) {
+            ShowResult(@"Get Auto flight speed failed: %@", error.description);
+        }
+        else {
+            target.speedLabel.text = [NSString stringWithFormat:@"%0.1fm/s", floatValue];
+            target.speedSlider.value = floatValue / 10.0;
+        }
+    }];
+}
+
+-(void)didReceiveEvent:(DJITapFlyMissionEvent *)event {
+    
+    if ([self isExecutingState:event.currentState]) {
+        [self shouldShowStartMissionButton:NO];
+    }
+    else {
+        [self.touchView updatePoint:INVALID_POINT];
+        [self hideMissionControlButton];
+    }
+    
+    if ([self isExecutingState:event.previousState] &&
+        ![self isExecutingState:event.currentState]) {
+        if (event.error) {
+            ShowResult(@"Mission interrupted with error:%@", event.error.description);
+        }
+        else {
+            ShowResult(@"Mission Stopped without error. ");
+        }
+    }
+    
+    NSMutableString* logString = [[NSMutableString alloc] init];
+    [logString appendFormat:@"Previous State:%@\n", [DemoUtility stringFromTapFlyState:event.previousState]];
+    [logString appendFormat:@"Current State:%@\n", [DemoUtility stringFromTapFlyState:event.currentState]];
+    
+    if (event.executionState) {
+        DJITapFlyExecutionState* status = event.executionState;
+        CGPoint point = status.imageLocation;
+        point = [DemoUtility pointFromStreamSpace:point];
+        if (CGPointEqualToPoint(point, CGPointZero)) {
+            point = INVALID_POINT;
+        }
+        
+        UIColor *color = [UIColor greenColor];
+        if (event.currentState == DJITapFlyMissionStateExecuting) {
+            color = [[UIColor greenColor] colorWithAlphaComponent:0.5];
+        }
+        else if (event.currentState == DJITapFlyMissionStateExecutionResetting)
+        {
+            color = [[UIColor redColor] colorWithAlphaComponent:0.5];
+        }
+        else if (event.currentState == DJITapFlyMissionStateExecutionPaused) {
+            color = [[UIColor yellowColor] colorWithAlphaComponent:0.5];
+        }
+        else {
+            color = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+        }
+        
+        [self.touchView updatePoint:point andColor:color];
+        [logString appendFormat:@"Speed:%f\n", event.executionState.speed],
+        [logString appendFormat:@"ByPass Direction:%@\n", [DemoUtility stringFromByPassDirection:event.executionState.bypassDirection]];
+        [logString appendFormat:@"Direction:{%f, %f, %f}\n",
+         event.executionState.direction.x,
+         event.executionState.direction.y,
+         event.executionState.direction.z];
+        [logString appendFormat:@"View Point:{%f, %f}\n", point.x, point.y];
+        [logString appendFormat:@"Heading:%f", event.executionState.relativeHeading];
+    }
+    
+    if (event.error) {
+        self.previousError = event.error;
+    }
+    if (self.previousError) {
+        [logString appendFormat:@"Error:%@\n", self.previousError.localizedDescription];
+    }
+    if ([self missionOperator].persistentError) {
+        [logString appendFormat:@"Persistent Error:%@\n", [self missionOperator].persistentError.localizedDescription];
+    }
+    [self.statusView writeStatus:logString];
+}
 
 -(void) onScreenTouched:(UIGestureRecognizer*)recognizer
 {
@@ -166,25 +232,15 @@
 
 -(void) startTapFlyMissionWithPoint:(CGPoint)point
 {
-    DJITapFlyMission* tapFlyMission = [[DJITapFlyMission alloc] init];
-    tapFlyMission.imageLocationToCalculateDirection = point;
-    tapFlyMission.autoFlightSpeed = self.speed;
-    tapFlyMission.isHorizontalObstacleAvoidanceEnabled = self.isHorizontalObstacleAvoidanceEnabled;
-    weakSelf(target);
-    [[DJIMissionManager sharedInstance] prepareMission:tapFlyMission withProgress:nil withCompletion:^(NSError * _Nullable error) {
-        if (error) {
-            weakReturn(target);
-            [target.touchView updatePoint:INVALID_POINT];
-            ShowResult(@"Prepare Mission Error:%@", error.localizedDescription);
-        }
-        else
-        {
-            [target shouldShowStartMissionButton:YES];
-        }
-    }];
+    if (!self.tapFlyMission) {
+        self.tapFlyMission = [[DJITapFlyMission alloc] init];
+    }
+    self.tapFlyMission.imageLocationToCalculateDirection = point;
+    self.tapFlyMission.tapFlyMode = DJITapFlyModeForward;
+    [self shouldShowStartMissionButton:YES];
+    
 }
 
-//Should Show StartMissionButton and hide StopMissionButton
 - (void) shouldShowStartMissionButton:(BOOL)show
 {
     if (show) {
@@ -203,54 +259,86 @@
     [self.stopMissionBtn setHidden:YES];
 }
 
-#pragma mark - DJICameraDelegate
+#pragma mark IBAction Methods
 
--(void) camera:(DJICamera*)camera didReceiveVideoData:(uint8_t*)videoBuffer length:(size_t)length
-{
-    uint8_t* pBuffer = (uint8_t*)malloc(length);
-    memcpy(pBuffer, videoBuffer, length);
-    [[VideoPreviewer instance] push:pBuffer length:(int)length];
+- (IBAction)showStatusButtonAction:(id)sender {
+    [self.statusView setHidden:NO];
+    [self.statusView show];
 }
 
-#pragma mark - DJIMissionManagerDelegate
-
-- (void)missionManager:(DJIMissionManager *_Nonnull)manager didFinishMissionExecution:(NSError *_Nullable)error
+-(IBAction) onSliderValueChanged:(UISlider*)slider
 {
-    ShowResult(@"Mission Finished:%@", error.localizedDescription);
-    [self.touchView updatePoint:INVALID_POINT];
-    [self hideMissionControlButton];
-    self.isMissionRunning = NO;
-}
+    float speed = slider.value * 10;
+    self.speed = speed;
+    self.speedLabel.text = [NSString stringWithFormat:@"%0.1fm/s", speed];
+    if (self.isMissionRunning) {
+        
+        weakSelf(target);
+        [[self missionOperator] setAutoFlightSpeed:self.speed withCompletion:^(NSError * _Nullable error) {
+            weakReturn(target);
+            if (error) {
+                NSLog(@"Set TapFly Auto Flight Speed:%0.1f Error:%@", speed, error.localizedDescription);
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [target updateSpeedSlider];
+            });
 
-- (void)missionManager:(DJIMissionManager *_Nonnull)manager missionProgressStatus:(DJIMissionProgressStatus *_Nonnull)missionProgress
-{
-    if ([missionProgress isKindOfClass:[DJITapFlyMissionStatus class]]) {
-        self.isMissionRunning = YES;
-        DJITapFlyMissionStatus* status = (DJITapFlyMissionStatus*)missionProgress;
-        CGPoint point = status.imageLocation;
-        point.x = point.x * self.fpvView.frame.size.width;
-        point.y = point.y * self.fpvView.frame.size.height;
-        if (CGPointEqualToPoint(point, CGPointZero)) {
-            point = INVALID_POINT;
-        }
-        if (status.executionState == DJITapFlyMissionExecutionStateExecuting) {
-            [self.touchView updatePoint:point andColor:[[UIColor greenColor] colorWithAlphaComponent:0.5]];
-            [self shouldShowStartMissionButton:NO];
-        }
-        else if (status.executionState == DJITapFlyMissionExecutionStateCannotExecute)
-        {
-            [self.touchView updatePoint:point andColor:[[UIColor redColor] colorWithAlphaComponent:0.5]];
-            [self shouldShowStartMissionButton:NO];
-        }
-        
-        NSLog(@"Direction:{%f, %f, %f} ExecState:%d", status.direction.x, status.direction.y, status.direction.z, (int)status.executionState);
-        
-        [self.logString appendFormat:@"Execution State:%@\n", [DemoUtility stringFromPointingExecutionState:status.executionState]];
-        [self.logString appendFormat:@"ByPass Direction:%@\n", [DemoUtility stringFromByPassDirection:status.bypassDirection]];
-        [self.logString appendFormat:@"Direction:{%f, %f, %f}\n", status.direction.x, status.direction.y, status.direction.z];
-        [self.logString appendFormat:@"View Point:{%f, %f}\n", point.x, point.y];
-        [self.logString appendFormat:@"Error:%@", status.error.localizedDescription];
+        }];
     }
+}
+
+-(IBAction) onSwitchValueChanged:(UISwitch*)sender
+{
+    weakSelf(target);
+    [[self missionOperator] setHorizontalObstacleBypassEnabled:sender.isOn withCompletion:^(NSError * _Nullable error) {
+        if (error) {
+            ShowResult(@"Set Horizontal Obstacle Bypass Enabled failed: %@", error.description);
+        }
+        [target updateBypassStatus];
+    }];
+}
+
+-(IBAction) onStartMissionButtonAction:(UIButton*)sender
+{
+    weakSelf(target);
+    
+    [[self missionOperator] startMission:self.tapFlyMission withCompletion:^(NSError * _Nullable error) {
+        ShowResult(@"Start Mission:%@", error.localizedDescription);
+        weakReturn(target);
+        if (!error) {
+            [target shouldShowStartMissionButton:NO];
+        }else
+        {
+            [target.touchView updatePoint:INVALID_POINT];
+            ShowResult(@"StartMission Failed: %@", error.description);
+        }
+    }];
+}
+
+-(IBAction) onStopMissionButtonAction:(UIButton*)sender
+{
+    
+    weakSelf(target);
+    
+    [[self missionOperator] stopMissionWtihCompletion:^(NSError * _Nullable error) {
+        ShowResult(@"Stop Mission:%@", error.localizedDescription);
+        if (!error) {
+            weakReturn(target);
+            [self.touchView updatePoint:INVALID_POINT];
+            [target hideMissionControlButton];
+        }else
+        {
+            ShowResult(@"StopMission Failed: %@", error.description);
+        }
+
+    }];
+
+}
+
+#pragma mark - DJIVideoFeedListener
+
+-(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
+    [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
 }
 
 @end

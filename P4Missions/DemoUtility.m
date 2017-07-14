@@ -66,6 +66,14 @@ void ShowResult(NSString *format, ...)
     return normalized;
 }
 
++ (CGPoint) pointFromStreamSpace:(CGPoint)point{
+    VideoPreviewer* previewer = [VideoPreviewer instance];
+    CGRect videoFrame = [previewer frame];
+    CGPoint videoPoint = CGPointMake(point.x*videoFrame.size.width,
+                                     point.y*videoFrame.size.height);
+    return videoPoint;
+}
+
 + (CGPoint) pointFromStreamSpace:(CGPoint)point withView:(UIView *)view{
     VideoPreviewer* previewer = [VideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
@@ -83,6 +91,13 @@ void ShowResult(NSString *format, ...)
     VideoPreviewer* previewer = [VideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     return CGSizeMake(size.width*videoFrame.size.width, size.height*videoFrame.size.height);
+}
+
++ (CGRect) rectFromStreamSpace:(CGRect)rect
+{
+    CGPoint origin = [DemoUtility pointFromStreamSpace:rect.origin];
+    CGSize size = [DemoUtility sizeFromStreamSpace:rect.size];
+    return CGRectMake(origin.x, origin.y, size.width, size.height);
 }
 
 + (CGRect) rectToStreamSpace:(CGRect)rect withView:(UIView *)view
@@ -109,24 +124,29 @@ void ShowResult(NSString *format, ...)
     return rect;
 }
 
-+ (NSString*) stringFromPointingExecutionState:(DJITapFlyMissionExecutionState)state
++ (NSString*) stringFromPointingExecutionState:(DJITapFlyMissionState)state
 {
     switch (state) {
-        case DJITapFlyMissionExecutionStateCannotExecute: return @"Can Not Fly";
-        case DJITapFlyMissionExecutionStateExecuting: return @"Normal Flying";
-        case DJITapFlyMissionExecutionStateUnknown: return @"Unknown";
+        case DJITapFlyMissionStateCannotStart: return @"Can Not Fly";
+        case DJITapFlyMissionStateExecuting: return @"Normal Flying";
+        case DJITapFlyMissionStateUnknown: return @"Unknown";
+        case DJITapFlyMissionStateDisconnected: return @"Aircraft disconnected";
+        case DJITapFlyMissionStateRecovering: return @"Connection recovering";
+        case DJITapFlyMissionStateNotSupported: return @"Not Supported";
+        case DJITapFlyMissionStateReadyToStart: return @"Ready to Start";
+        case DJITapFlyMissionStateExecutionPaused: return @"Execution Paused";
+        case DJITapFlyMissionStateExecutionResetting: return @"Execution Resetting";
     }
 }
 
-+ (NSString*) stringFromTrackingExecutionState:(DJIActiveTrackMissionExecutionState)state
++ (NSString*) stringFromTrackingExecutionState:(DJIActiveTrackTargetState)state
 {
     switch (state) {
-        case DJIActiveTrackMissionExecutionStateTracking: return @"Normal Tracking";
-        case DJIActiveTrackMissionExecutionStateTrackingWithLowConfidence: return @"Tracking Uncertain Target";
-        case DJIActiveTrackMissionExecutionStateWaitingForConfirmation: return @"Need Confirm";
-        case DJIActiveTrackMissionExecutionStateTargetLost: return @"Target Lost";
-        case DJIActiveTrackMissionExecutionStateCannotContinue: return @"Waiting";
-        case DJIActiveTrackMissionExecutionStateUnknown: return @"Unknown";
+        case DJIActiveTrackTargetStateTrackingWithHighConfidence: return @"Normal Tracking";
+        case DJIActiveTrackTargetStateTrackingWithLowConfidence: return @"Tracking Uncertain Target";
+        case DJIActiveTrackTargetStateWaitingForConfirmation: return @"Need Confirm";
+        case DJIActiveTrackTargetStateCannotConfirm: return @"Waiting";
+        case DJIActiveTrackTargetStateUnknown: return @"Unknown";
     }
 }
 
@@ -140,6 +160,106 @@ void ShowResult(NSString *format, ...)
         case DJIBypassDirectionUnknown: return @"Unknown";
     }
     return nil;
+}
+
++(NSString *)stringFromActiveTrackState:(DJIActiveTrackMissionState)state {
+    switch (state) {
+        case DJIActiveTrackMissionStateReadyToStart:
+            return @"ReadyToStart";
+        case DJIActiveTrackMissionStateUnknown:
+            return @"Unknown";
+        case DJIActiveTrackMissionStateRecovering:
+            return @"Recovering";
+        case DJIActiveTrackMissionStateCannotStart:
+            return @"CannotStart";
+        case DJIActiveTrackMissionStateDisconnected:
+            return @"Disconnected";
+        case DJIActiveTrackMissionStateNotSupported:
+            return @"NotSupported";
+        case DJIActiveTrackMissionStateCannotConfirm:
+            return @"CannotConfirm";
+        case DJIActiveTrackMissionStateDetectingHuman:
+            return @"DetectingHuman";
+        case DJIActiveTrackMissionStateAircraftFollowing:
+            return @"AircraftFollowing";
+        case DJIActiveTrackMissionStateOnlyCameraFollowing:
+            return @"OnlyCameraFollowing";
+        case DJIActiveTrackMissionStateFindingTrackedTarget:
+            return @"FindingTrackedTarget";
+        case DJIActiveTrackMissionStateWaitingForConfirmation:
+            return @"WaitingForConfirmation";
+        case DJIActiveTrackMissionStatePerformingQuickShot:
+            return @"QuickShot";
+    }
+    return nil;
+}
+
++(NSString *)stringFromTargetState:(DJIActiveTrackTargetState)state {
+    switch (state) {
+        case DJIActiveTrackTargetStateTrackingWithLowConfidence:
+            return @"Low Confident";
+        case DJIActiveTrackTargetStateTrackingWithHighConfidence:
+            return @"High Confident";
+        case DJIActiveTrackTargetStateCannotConfirm:
+            return @"Cannot Confirm";
+        case DJIActiveTrackTargetStateUnknown:
+            return @"Unknown";
+        case DJIActiveTrackTargetStateWaitingForConfirmation:
+            return @"Waiting For Confirmation";
+    }
+    return nil;
+}
+
++(NSString *)stringFromCannotConfirmReason:(DJIActiveTrackCannotConfirmReason)reason {
+    switch (reason) {
+        case DJIActiveTrackCannotConfirmReasonNone:
+            return @"None";
+        case DJIActiveTrackCannotConfirmReasonUnknown:
+            return @"Unknown";
+        case DJIActiveTrackCannotConfirmReasonTargetTooFar:
+            return @"Target Too Far";
+        case DJIActiveTrackCannotConfirmReasonAircraftTooLow:
+            return @"Aircraft Too Low";
+        case DJIActiveTrackCannotConfirmReasonTargetTooClose:
+            return @"Target Too Close";
+        case DJIActiveTrackCannotConfirmReasonTargetTooHigh:
+            return @"Target Too High";
+        case DJIActiveTrackCannotConfirmReasonUnstableTarget:
+            return @"Unstable Target";
+        case DJIActiveTrackCannotConfirmReasonAircraftTooHigh:
+            return @"Aircraft Too High";
+        case DJIActiveTrackCannotConfirmReasonBlockedByObstacle:
+            return @"Blocked by Obstacle";
+        case DJIActiveTrackCannotConfirmReasonGimbalAttitudeError:
+            return @"Gimbal Attitude Error";
+        case DJIActiveTrackCannotConfirmReasonObstacleSensorError:
+            return @"Sensor Error";
+    }
+    return nil;
+}
+
+
++(NSString *)stringFromTapFlyState:(DJITapFlyMissionState)state {
+    switch (state) {
+        case DJITapFlyMissionStateReadyToStart:
+            return @"ReadyToStart";
+        case DJITapFlyMissionStateUnknown:
+            return @"Unknown";
+        case DJITapFlyMissionStateExecuting:
+            return @"Executing";
+        case DJITapFlyMissionStateRecovering:
+            return @"Recovering";
+        case DJITapFlyMissionStateCannotStart:
+            return @"CannotStart";
+        case DJITapFlyMissionStateDisconnected:
+            return @"Disconnected";
+        case DJITapFlyMissionStateNotSupported:
+            return @"NotSupported";
+        case DJITapFlyMissionStateExecutionPaused:
+            return @"ExecutionPaused";
+        case DJITapFlyMissionStateExecutionResetting:
+            return @"ExecutionResetting";
+    }
 }
 
 @end

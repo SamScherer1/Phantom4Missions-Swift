@@ -28,10 +28,12 @@ extern void ShowResult(NSString *format, ...);
 /**
  *  Help to do the coordinate transformations.
  */
++ (CGPoint) pointFromStreamSpace:(CGPoint)point;
 + (CGPoint) pointToStreamSpace:(CGPoint)point withView:(UIView *)view;
 + (CGPoint) pointFromStreamSpace:(CGPoint)point withView:(UIView *)view;
 + (CGSize) sizeToStreamSpace:(CGSize)size;
 + (CGSize) sizeFromStreamSpace:(CGSize)size;
++ (CGRect) rectFromStreamSpace:(CGRect)rect;
 + (CGRect) rectToStreamSpace:(CGRect)rect withView:(UIView *)view;
 + (CGRect) rectFromStreamSpace:(CGRect)rect withView:(UIView *)view;
 + (CGRect) rectWithPoint:(CGPoint)point1 andPoint:(CGPoint)point2;
@@ -39,8 +41,10 @@ extern void ShowResult(NSString *format, ...);
 /**
  *  Returns the string object from related enum values.
  */
-+ (NSString*) stringFromPointingExecutionState:(DJITapFlyMissionExecutionState)state;
-+ (NSString*) stringFromTrackingExecutionState:(DJIActiveTrackMissionExecutionState)state;
 + (NSString*) stringFromByPassDirection:(DJIBypassDirection)direction;
++ (NSString *) stringFromActiveTrackState:(DJIActiveTrackMissionState)state;
++ (NSString *) stringFromTargetState:(DJIActiveTrackTargetState)state;
++ (NSString *) stringFromCannotConfirmReason:(DJIActiveTrackCannotConfirmReason)reason;
++ (NSString *) stringFromTapFlyState:(DJITapFlyMissionState)state;
 
 @end

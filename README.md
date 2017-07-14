@@ -1,7 +1,5 @@
 # iOS-Phantom4Missions
 
-> **Note: This Sample Project is developed based on iOS SDK v3.5.1, an update version for iOS SDK v4.0 will be published soon.**
-
 ## Introduction
 
 From this demo, you will learn how to use the TapFly and ActiveTrack Missions of DJI iOS SDK to create a cool application for Phantom 4. You will get familiar with DJIMissionManager and use the Simulator of DJI Assistant 2 for testing, which is convenient for you to test the missions indoor. 
@@ -10,7 +8,7 @@ From this demo, you will learn how to use the TapFly and ActiveTrack Missions of
 
  - iOS 9.0+
  - Xcode 8.0+
- - DJI iOS SDK 3.5.1
+ - DJI iOS SDK 4.2.2
 
 ## SDK Installation with CocoaPods
 
@@ -39,7 +37,7 @@ If you install it successfully, you should get the messages similar to the follo
 ~~~
 Analyzing dependencies
 Downloading dependencies
-Installing DJI-SDK-iOS (3.5.1)
+Installing DJI-SDK-iOS (4.2.2)
 Generating Pods project
 Integrating client project
 

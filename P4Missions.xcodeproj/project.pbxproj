@@ -11,18 +11,18 @@
 		A419409A1DCB69080076478C /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A41940981DCB68FD0076478C /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A438D3331C97E3270003D129 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3321C97E3270003D129 /* main.m */; };
 		A438D3361C97E3270003D129 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3351C97E3270003D129 /* AppDelegate.m */; };
-		A438D3421C97E3270003D129 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A438D3401C97E3270003D129 /* Main.storyboard */; };
 		A438D3441C97E3270003D129 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A438D3431C97E3270003D129 /* Assets.xcassets */; };
 		A438D3471C97E3270003D129 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A438D3451C97E3270003D129 /* LaunchScreen.storyboard */; };
-		A438D3521C97E3270003D129 /* P4MissionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3511C97E3270003D129 /* P4MissionsTests.m */; };
 		A438D3631C97E4CA0003D129 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3621C97E4CA0003D129 /* RootViewController.m */; };
 		A438D4EF1C9948850003D129 /* DemoUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4EE1C9948850003D129 /* DemoUtility.m */; };
 		A438D4F81C994B590003D129 /* ActiveTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4F41C994B590003D129 /* ActiveTrackViewController.m */; };
 		A438D4FC1C994B800003D129 /* TrackingRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FB1C994B800003D129 /* TrackingRenderView.m */; };
 		A438D4FF1C994B880003D129 /* PointingTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FE1C994B880003D129 /* PointingTouchView.m */; };
 		A438D5171C9953030003D129 /* TapFlyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D5161C9953030003D129 /* TapFlyViewController.m */; };
+		A46ED68E1F0E4A5000F2EBD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46ED68C1F0E4A5000F2EBD6 /* Main.storyboard */; };
 		A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C539A71C9954A200757368 /* Foundation.framework */; };
-		A4C53A331C9C3D7D00757368 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C53A321C9C3D7D00757368 /* StatusViewController.m */; };
+		A4D307321F0E47B400182FA3 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D307301F0E47B400182FA3 /* DJIScrollView.m */; };
+		A4D307331F0E47B400182FA3 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D307311F0E47B400182FA3 /* DJIScrollView.xib */; };
 		F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */; };
 /* End PBXBuildFile section */
 
@@ -40,13 +40,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 02A543FC1C3C51CB0083C11B;
 			remoteInfo = VideoPreviewer;
-		};
-		A438D34E1C97E3270003D129 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A438D3261C97E3270003D129 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A438D32D1C97E3270003D129;
-			remoteInfo = P4Missions;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -71,11 +64,9 @@
 		A438D3321C97E3270003D129 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A438D3341C97E3270003D129 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A438D3351C97E3270003D129 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A438D3411C97E3270003D129 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A438D3431C97E3270003D129 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A438D3461C97E3270003D129 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A438D3481C97E3270003D129 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A438D34D1C97E3270003D129 /* P4MissionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = P4MissionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A438D3511C97E3270003D129 /* P4MissionsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = P4MissionsTests.m; sourceTree = "<group>"; };
 		A438D3531C97E3270003D129 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A438D3611C97E4CA0003D129 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -90,9 +81,11 @@
 		A438D4FE1C994B880003D129 /* PointingTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointingTouchView.m; sourceTree = "<group>"; };
 		A438D5151C9953030003D129 /* TapFlyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapFlyViewController.h; sourceTree = "<group>"; };
 		A438D5161C9953030003D129 /* TapFlyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapFlyViewController.m; sourceTree = "<group>"; };
+		A46ED68D1F0E4A5000F2EBD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A4C539A71C9954A200757368 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		A4C53A311C9C3D7D00757368 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
-		A4C53A321C9C3D7D00757368 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
+		A4D3072F1F0E47B400182FA3 /* DJIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIScrollView.h; sourceTree = "<group>"; };
+		A4D307301F0E47B400182FA3 /* DJIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIScrollView.m; sourceTree = "<group>"; };
+		A4D307311F0E47B400182FA3 /* DJIScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DJIScrollView.xib; sourceTree = "<group>"; };
 		ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-P4Missions.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B668C4A12A035B70823C15F3 /* Pods-P4Missions.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P4Missions.debug.xcconfig"; path = "Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions.debug.xcconfig"; sourceTree = "<group>"; };
 		E99BB34A48ABE875CD06AFB6 /* Pods-P4Missions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P4Missions.release.xcconfig"; path = "Pods/Target Support Files/Pods-P4Missions/Pods-P4Missions.release.xcconfig"; sourceTree = "<group>"; };
@@ -106,13 +99,6 @@
 				A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */,
 				F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */,
 				A41940991DCB69080076478C /* VideoPreviewer.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A438D34A1C97E3270003D129 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				A438D32E1C97E3270003D129 /* P4Missions.app */,
-				A438D34D1C97E3270003D129 /* P4MissionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,15 +149,16 @@
 				A438D3351C97E3270003D129 /* AppDelegate.m */,
 				A438D3611C97E4CA0003D129 /* RootViewController.h */,
 				A438D3621C97E4CA0003D129 /* RootViewController.m */,
-				A4C53A311C9C3D7D00757368 /* StatusViewController.h */,
-				A4C53A321C9C3D7D00757368 /* StatusViewController.m */,
 				A438D4F21C994B590003D129 /* ActiveTrackMission */,
 				A438D4F51C994B590003D129 /* TapFlyMission */,
 				A438D4ED1C9948850003D129 /* DemoUtility.h */,
 				A438D4EE1C9948850003D129 /* DemoUtility.m */,
-				A438D3401C97E3270003D129 /* Main.storyboard */,
-				A438D3431C97E3270003D129 /* Assets.xcassets */,
+				A4D3072F1F0E47B400182FA3 /* DJIScrollView.h */,
+				A4D307301F0E47B400182FA3 /* DJIScrollView.m */,
+				A4D307311F0E47B400182FA3 /* DJIScrollView.xib */,
+				A46ED68C1F0E4A5000F2EBD6 /* Main.storyboard */,
 				A438D3451C97E3270003D129 /* LaunchScreen.storyboard */,
+				A438D3431C97E3270003D129 /* Assets.xcassets */,
 				A438D39E1C97EAD60003D129 /* Frameworks */,
 				A438D3311C97E3270003D129 /* Supporting Files */,
 			);
@@ -261,24 +247,6 @@
 			productReference = A438D32E1C97E3270003D129 /* P4Missions.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A438D34C1C97E3270003D129 /* P4MissionsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A438D3591C97E3270003D129 /* Build configuration list for PBXNativeTarget "P4MissionsTests" */;
-			buildPhases = (
-				A438D3491C97E3270003D129 /* Sources */,
-				A438D34A1C97E3270003D129 /* Frameworks */,
-				A438D34B1C97E3270003D129 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A438D34F1C97E3270003D129 /* PBXTargetDependency */,
-			);
-			name = P4MissionsTests;
-			productName = P4MissionsTests;
-			productReference = A438D34D1C97E3270003D129 /* P4MissionsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -295,10 +263,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					A438D34C1C97E3270003D129 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = A438D32D1C97E3270003D129;
 					};
 				};
 			};
@@ -322,7 +286,6 @@
 			projectRoot = "";
 			targets = (
 				A438D32D1C97E3270003D129 /* P4Missions */,
-				A438D34C1C97E3270003D129 /* P4MissionsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -344,14 +307,8 @@
 			files = (
 				A438D3471C97E3270003D129 /* LaunchScreen.storyboard in Resources */,
 				A438D3441C97E3270003D129 /* Assets.xcassets in Resources */,
-				A438D3421C97E3270003D129 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A438D34B1C97E3270003D129 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A4D307331F0E47B400182FA3 /* DJIScrollView.xib in Resources */,
+				A46ED68E1F0E4A5000F2EBD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +327,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DE999B0AEDD26EFEA69CB317 /* [CP] Copy Pods Resources */ = {
@@ -413,20 +370,12 @@
 				A438D5171C9953030003D129 /* TapFlyViewController.m in Sources */,
 				A438D4FF1C994B880003D129 /* PointingTouchView.m in Sources */,
 				A438D3361C97E3270003D129 /* AppDelegate.m in Sources */,
+				A4D307321F0E47B400182FA3 /* DJIScrollView.m in Sources */,
 				A438D4F81C994B590003D129 /* ActiveTrackViewController.m in Sources */,
-				A4C53A331C9C3D7D00757368 /* StatusViewController.m in Sources */,
 				A438D4EF1C9948850003D129 /* DemoUtility.m in Sources */,
 				A438D3631C97E4CA0003D129 /* RootViewController.m in Sources */,
 				A438D4FC1C994B800003D129 /* TrackingRenderView.m in Sources */,
 				A438D3331C97E3270003D129 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A438D3491C97E3270003D129 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A438D3521C97E3270003D129 /* P4MissionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,28 +387,23 @@
 			name = VideoPreviewer;
 			targetProxy = A419409B1DCB69080076478C /* PBXContainerItemProxy */;
 		};
-		A438D34F1C97E3270003D129 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A438D32D1C97E3270003D129 /* P4Missions */;
-			targetProxy = A438D34E1C97E3270003D129 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A438D3401C97E3270003D129 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A438D3411C97E3270003D129 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A438D3451C97E3270003D129 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A438D3461C97E3270003D129 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A46ED68C1F0E4A5000F2EBD6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A46ED68D1F0E4A5000F2EBD6 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -568,7 +512,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.p4mission;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.p4mission2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -595,33 +539,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.p4mission;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.p4mission2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "arm64 armv7 armv7s";
-			};
-			name = Release;
-		};
-		A438D35A1C97E3270003D129 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = P4MissionsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.P4MissionsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/P4Missions.app/P4Missions";
-			};
-			name = Debug;
-		};
-		A438D35B1C97E3270003D129 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = P4MissionsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.P4MissionsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/P4Missions.app/P4Missions";
 			};
 			name = Release;
 		};
@@ -642,15 +562,6 @@
 			buildConfigurations = (
 				A438D3571C97E3270003D129 /* Debug */,
 				A438D3581C97E3270003D129 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A438D3591C97E3270003D129 /* Build configuration list for PBXNativeTarget "P4MissionsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A438D35A1C97E3270003D129 /* Debug */,
-				A438D35B1C97E3270003D129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

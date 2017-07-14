@@ -9,21 +9,25 @@
 #import "ActiveTrackViewController.h"
 #import "TrackingRenderView.h"
 #import "DemoUtility.h"
-#import "StatusViewController.h"
+#import "DJIScrollView.h"
 
-@interface ActiveTrackViewController () <DJICameraDelegate, DJIMissionManagerDelegate, TrackingRenderViewDelegate>
+@interface ActiveTrackViewController () <DJICameraDelegate, DJIVideoFeedListener, TrackingRenderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet TrackingRenderView *renderView;
-@property (weak, nonatomic) IBOutlet UIButton* stopButton;
+@property (weak, nonatomic) IBOutlet UIButton *acceptButton;
+@property (weak, nonatomic) IBOutlet UIButton *stopButton;
+@property (weak, nonatomic) IBOutlet UIButton *rejectButton;
 @property (weak, nonatomic) IBOutlet UILabel *retreatEnabledLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gestureEnabledLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *retreatSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *gestureSwitch;
 
+@property(nonatomic) DJIScrollView *statusView;
 @property(nonatomic, assign) CGRect currentTrackingRect;
-@property (nonatomic, strong) NSMutableString *logString;
 
 @property(nonatomic, assign) BOOL isNeedConfirm;
 @property(nonatomic, assign) BOOL isTrackingMissionRunning;
-@property(nonatomic, assign) BOOL isRetreatEnabled;
 
 @end
 
@@ -37,27 +41,31 @@
     
     [[VideoPreviewer instance] setView:self.fpvView];
     
-    [DJIMissionManager sharedInstance].delegate = self;
-    
     DJICamera* camera = [DemoUtility fetchCamera];
     if (camera) {
         camera.delegate = self;
     }
     
+    [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     [[VideoPreviewer instance] start];
-    
-    [DJIActiveTrackMission setRecommendedConfigurationWithCompletion:^(NSError * _Nullable error) {
-        if (error) {
-            ShowResult(@"Set Recommended Camera Settings:%@", error.localizedDescription);            
+
+    [[self missionOperator] setRecommendedConfigurationWithCompletion:^(NSError * _Nullable error) {
+        if(error){
+            ShowResult(@"Set Recommended recommended camera and gimbal configuration: %@", error.localizedDescription);
         }
     }];
+    
+    [self updateButtons];
+    [self updateGestureEnabled];
+    [self updateRetreatEnabled];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[VideoPreviewer instance] unSetView];
-    [[VideoPreviewer instance] setView:nil];
+    [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
+
 }
 
 - (void)viewDidLoad {
@@ -67,31 +75,149 @@
 
     self.renderView.delegate = self;
     
-    self.isRetreatEnabled = NO;
-    self.logString = [NSMutableString string];
-    self.stopButton.layer.cornerRadius = self.stopButton.frame.size.width * 0.5;
-    self.stopButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.stopButton.layer.borderWidth = 1.0;
-    self.stopButton.layer.masksToBounds = YES;
+    [self.retreatEnabledLabel setTextColor:[UIColor whiteColor]];
+    [self.gestureEnabledLabel setTextColor:[UIColor whiteColor]];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self.retreatEnabledLabel setTextColor:[UIColor blackColor]];
-    }else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        [self.retreatEnabledLabel setTextColor:[UIColor whiteColor]];
-    }
-    
+    self.statusView = [DJIScrollView viewWithViewController:self];
+    self.statusView.fontSize = 18;
+
+    weakSelf(target);
+    [[self missionOperator] addListenerToEvents:self withQueue:dispatch_get_main_queue() andBlock:^(DJIActiveTrackMissionEvent * _Nonnull event) {
+        weakReturn(target);
+        [target didUpdateEvent:event];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark UIViewController Delegate Methods
+-(DJIActiveTrackMissionOperator *) missionOperator {
+    return [DJISDKManager missionControl].activeTrackMissionOperator;
+}
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    StatusViewController *statusVC = (StatusViewController *)segue.destinationViewController;
-    [statusVC setStatusText:self.logString];
+-(void)updateRetreatEnabled {
+    weakSelf(target);
+    [[self missionOperator] getRetreatEnabledWithCompletion:^(BOOL boolean, NSError * _Nullable error) {
+        weakReturn(target);
+        if (!error) {
+            target.retreatSwitch.on = boolean;
+        }
+    }];
+}
+
+-(void)updateGestureEnabled {
+    
+    self.gestureSwitch.on = [[self missionOperator] isGestureModeEnabled];
+}
+
+- (BOOL)isTrackingState:(DJIActiveTrackMissionState)state {
+    switch (state) {
+        case DJIActiveTrackMissionStateFindingTrackedTarget:
+        case DJIActiveTrackMissionStateAircraftFollowing:
+        case DJIActiveTrackMissionStateOnlyCameraFollowing:
+        case DJIActiveTrackMissionStateCannotConfirm:
+        case DJIActiveTrackMissionStateWaitingForConfirmation:
+        case DJIActiveTrackMissionStatePerformingQuickShot:
+            return YES;
+            
+        default:
+            break;
+    }
+    return NO;
+}
+
+- (BOOL)isTrackingMissionRunning {
+    return [self isTrackingState:[self missionOperator].currentState];
+}
+
+-(void)updateButtons {
+    
+    self.stopButton.hidden = ![self isTrackingMissionRunning];
+
+    if ([self missionOperator].currentState != DJIActiveTrackMissionStateWaitingForConfirmation) {
+        self.acceptButton.hidden = YES;
+    }else{
+        self.acceptButton.hidden = NO;
+    }
+
+    if (([self missionOperator].currentState == DJIActiveTrackMissionStateAircraftFollowing ||
+           [self missionOperator].currentState == DJIActiveTrackMissionStateFindingTrackedTarget) && [self missionOperator].trackingMode == DJIActiveTrackModeTrace) {
+        self.rejectButton.hidden = NO;
+    }else
+    {
+        self.rejectButton.hidden = YES;
+    }
+    
+}
+
+-(void)didUpdateEvent:(DJIActiveTrackMissionEvent *)event {
+
+    DJIActiveTrackMissionState prevState = event.previousState;
+    DJIActiveTrackMissionState curState = event.currentState;
+    if ([self isTrackingState:prevState] &&
+        ![self isTrackingState:curState]) {
+        if (event.error) {
+            ShowResult(@"Mission Interrupted: %@", event.error.description);
+        }
+        else {
+            ShowResult(@"Mission Stopped. ");
+        }
+    }
+    
+    if (event.trackingState) {
+        DJIActiveTrackTrackingState *state = event.trackingState;
+        CGRect rect = [DemoUtility rectFromStreamSpace:state.targetRect];
+        self.currentTrackingRect = rect;
+        if (event.trackingState.state == DJIActiveTrackTargetStateWaitingForConfirmation) {
+            self.isNeedConfirm = YES;
+            self.renderView.text = @"?";
+        }
+        else {
+            self.isNeedConfirm = NO;
+            self.renderView.text = nil;
+        }
+        UIColor *color = nil;
+        switch (state.state) {
+            case DJIActiveTrackTargetStateWaitingForConfirmation:
+                color = [[UIColor orangeColor] colorWithAlphaComponent:0.5];
+                break;
+            case DJIActiveTrackTargetStateCannotConfirm:
+                color = [[UIColor redColor] colorWithAlphaComponent:0.5];
+                break;
+            case DJIActiveTrackTargetStateTrackingWithHighConfidence:
+                color = [[UIColor greenColor] colorWithAlphaComponent:0.5];
+                break;
+            case DJIActiveTrackTargetStateTrackingWithLowConfidence:
+                color = [[UIColor yellowColor]colorWithAlphaComponent:0.5];
+                break;
+            case DJIActiveTrackTargetStateUnknown:
+                color = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+                break;
+            default:
+                break;
+        }
+        [self.renderView updateRect:rect fillColor:color];
+    }
+    else {
+        self.renderView.isDottedLine = NO;
+        self.renderView.text = nil;
+        self.isNeedConfirm = NO;
+        [self.renderView updateRect:CGRectNull fillColor:nil];
+    }
+    
+    NSMutableString* logString = [[NSMutableString alloc] init];
+    [logString appendFormat:@"From State:%@\n", [DemoUtility stringFromActiveTrackState:prevState]];
+    [logString appendFormat:@"To State:%@\n", [DemoUtility stringFromActiveTrackState:curState]];
+    [logString appendFormat:@"Tracking State:%@\n", event.trackingState ? [DemoUtility stringFromTargetState:event.trackingState.state] : nil];
+    [logString appendFormat:@"Cannot Confirm Reason:%@\n", event.trackingState ? [DemoUtility stringFromCannotConfirmReason:event.trackingState.cannotConfirmReason] : nil];
+    [logString appendFormat:@"Error:%@\n", event.error.localizedDescription];
+    [logString appendFormat:@"PersistentError:%@", [self missionOperator].persistentError.localizedDescription];
+    [logString appendFormat:@"QuickMoive Progress:%tu", event.trackingState.progress];
+    
+    [self.statusView writeStatus:logString];
+    [self updateButtons];
+    
 }
 
 #pragma mark TrackingRenderView Delegate Methods
@@ -103,16 +229,15 @@
     }
     
     if (self.isNeedConfirm) {
-        NSLog(@"TrackingRect:{%0.1f, %0.1f, %0.1f, %0.1f} Point:{%0.1f, %0.1f}", self.currentTrackingRect.origin.x, self.currentTrackingRect.origin.y, self.currentTrackingRect.size.width, self.currentTrackingRect.size.height, point.x, point.y);
         CGRect largeRect = CGRectInset(self.currentTrackingRect, -10, -10);
         if (CGRectContainsPoint(largeRect, point)) {
-            [DJIActiveTrackMission acceptConfirmationWithCompletion:^(NSError * _Nullable error) {
+            [[self missionOperator] acceptConfirmationWithCompletion:^(NSError * _Nullable error) {
                 ShowResult(@"Confirm Tracking:%@", error.localizedDescription);
             }];
         }
         else
         {
-            [DJIActiveTrackMission rejectConfirmationWithCompletion:^(NSError * _Nullable error) {
+            [[self missionOperator] stopMissionWithCompletion:^(NSError * _Nullable error) {
                 ShowResult(@"Cancel Tracking:%@", error.localizedDescription);
             }];
         }
@@ -122,10 +247,11 @@
         weakSelf(target);
         point = [DemoUtility pointToStreamSpace:point withView:self.renderView];
         DJIActiveTrackMission* mission = [[DJIActiveTrackMission alloc] init];
-        mission.rect = CGRectMake(point.x, point.y, 0, 0);
-        [[DJIMissionManager sharedInstance] prepareMission:mission withProgress:nil withCompletion:^(NSError * _Nullable error) {
+        mission.targetRect = CGRectMake(point.x, point.y, 0, 0);
+        mission.mode = DJIActiveTrackModeTrace;
+        [[self missionOperator] startMission:mission withCompletion:^(NSError * _Nullable error) {
             if (error) {
-                ShowResult(@"Prepare Mission Error:%@", error.localizedDescription);
+                ShowResult(@"Start Mission Error:%@", error.localizedDescription);
                 if (error) {
                     weakReturn(target);
                     target.renderView.isDottedLine = NO;
@@ -134,25 +260,17 @@
             }
             else
             {
-                [[DJIMissionManager sharedInstance] startMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-                    ShowResult(@"Start Mission:%@", error.localizedDescription);
-                    if (error) {
-                        weakReturn(target);
-                        target.renderView.isDottedLine = NO;
-                        [target.renderView updateRect:CGRectNull fillColor:nil];
-                    }
-                }];
+                ShowResult(@"Start Mission Success");
             }
+
         }];
+        
     }
 }
 
 -(void) renderViewDidMoveToPoint:(CGPoint)endPoint fromPoint:(CGPoint)startPoint isFinished:(BOOL)finished
 {
-    if (self.isTrackingMissionRunning) {
-        return;
-    }
-    
+
     self.renderView.isDottedLine = YES;
     self.renderView.text = nil;
     CGRect rect = [DemoUtility rectWithPoint:startPoint andPoint:endPoint];
@@ -167,119 +285,107 @@
 
 - (IBAction) onStopButtonClicked:(id)sender
 {
-    weakSelf(target);
-    [[DJIMissionManager sharedInstance] stopMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-        ShowResult(@"Stop Mission:%@", error.localizedDescription);
-        if (!error) {
-            weakReturn(target);
-            target.stopButton.hidden = YES;
-            [target.renderView updateRect:CGRectNull fillColor:nil];
-            target.isTrackingMissionRunning = NO;
+    [[self missionOperator] stopMissionWithCompletion:^(NSError * _Nullable error) {
+        if (error) {
+            ShowResult(@"Stop Mission Failed: %@", error.description);
+        }
+    }];
+    
+}
+
+- (IBAction)onAcceptButtonClicked:(id)sender {
+    
+    [[self missionOperator] acceptConfirmationWithCompletion:^(NSError * _Nullable error) {
+        if (error) {
+            ShowResult(@"Accept Confirmation Failed: %@", error.description);
         }
     }];
 }
 
-- (IBAction) onSwitchValueChanged:(UISwitch*)sender
+- (IBAction)onRejectButtonClicked:(id)sender {
+   
+    [[self missionOperator] stopAircraftFollowingWithCompletion:^(NSError * _Nullable error) {
+            ShowResult(@"Stop Aircraft Following Failed: %@", error.description);
+    }];
+    
+}
+
+- (IBAction)onGestureEnabledSwitchValueChanged:(UISwitch*)sender {
+  
+    weakSelf(target);
+    [[self missionOperator] setGestureModeEnabled:sender.isOn withCompletion:^(NSError * _Nullable error) {
+        weakReturn(target);
+        if (error != nil) {
+            NSLog(@"Set Gesture Mode Enabled failed.");
+        }else{
+            NSLog(@"Set Gesture Mode Enabled success.");
+            [target updateGestureEnabled];
+        }
+    }];
+    
+}
+
+- (IBAction) onRetreatEnabledSwitchValueChanged:(UISwitch*)sender
 {
-    self.isRetreatEnabled = sender.isOn;
+    weakSelf(target);
+    [[self missionOperator] setRetreatEnabled:sender.isOn withCompletion:^(NSError * _Nullable error) {
+        weakReturn(target);
+        if (error != nil) {
+            NSLog(@"Set Retreat Enabled failed.");
+        }else{
+            NSLog(@"Set Retreat Enabled success.");
+            [target updateRetreatEnabled];
+        }
+    }];
+    
+}
+
+- (IBAction)onSetRecommendedConfigurationClicked:(id)sender {
+    
+    [[self missionOperator] setRecommendedConfigurationWithCompletion:^(NSError * _Nullable error) {
+        if (error) {
+            ShowResult(@"Set Recommended Camera and Gimbal Configuration Failed: %@", error.localizedDescription);
+        }else{
+            ShowResult(@"Set Recommended Camera and Gimbal Configuration Success.");
+        }
+        
+    }];
+}
+
+- (IBAction)showStatusButtonAction:(id)sender {
+    [self.statusView setHidden:NO];
+    [self.statusView show];
 }
 
 #pragma mark Custom Methods
 -(void) startMissionWithRect:(CGRect)rect
 {
     CGRect normalizedRect = [DemoUtility rectToStreamSpace:rect withView:self.renderView];
-    weakSelf(target);
-    NSLog(@"Start Mission:{%f, %f, %f, %f}", normalizedRect.origin.x, normalizedRect.origin.y, normalizedRect.size.width, normalizedRect.size.height);
     DJIActiveTrackMission* trackMission = [[DJIActiveTrackMission alloc] init];
-    trackMission.rect = normalizedRect;
-    trackMission.isRetreatEnabled = self.isRetreatEnabled;
-    [[DJIMissionManager sharedInstance] prepareMission:trackMission withProgress:nil withCompletion:^(NSError * _Nullable error) {
+    trackMission.targetRect = normalizedRect;
+    trackMission.mode = DJIActiveTrackModeTrace;
+    
+    weakSelf(target);
+    [[self missionOperator] startMission:trackMission withCompletion:^(NSError * _Nullable error) {
         if (error) {
             weakReturn(target);
             target.renderView.isDottedLine = NO;
             [target.renderView updateRect:CGRectNull fillColor:nil];
-            target.isTrackingMissionRunning = NO;
-            ShowResult(@"Prepare Error:%@", error.localizedDescription);
+            ShowResult(@"Start Mission Error:%@", error.localizedDescription);
         }
         else
         {
-            [[DJIMissionManager sharedInstance] startMissionExecutionWithCompletion:^(NSError * _Nullable error) {
-                ShowResult(@"Start Mission:%@", error.localizedDescription);
-                if (error) {
-                    weakReturn(target);
-                    target.renderView.isDottedLine = NO;
-                    [target.renderView updateRect:CGRectNull fillColor:nil];
-                    target.isTrackingMissionRunning = NO;
-                }
-            }];
+            ShowResult(@"Start Mission Success");
         }
+
     }];
+
 }
 
-#pragma mark - DJICameraDelegate Method
+#pragma mark - DJIVideoFeedListener
 
--(void) camera:(DJICamera*)camera didReceiveVideoData:(uint8_t*)videoBuffer length:(size_t)length
-{
-    uint8_t* pBuffer = (uint8_t*)malloc(length);
-    memcpy(pBuffer, videoBuffer, length);
-    [[VideoPreviewer instance] push:pBuffer length:(int)length];
-}
-
-#pragma mark - DJIMissionManagerDelegate Methods
-
-- (void)missionManager:(DJIMissionManager *_Nonnull)manager didFinishMissionExecution:(NSError *_Nullable)error
-{
-    [self.renderView updateRect:CGRectNull fillColor:nil];
-    self.stopButton.hidden = YES;
-    self.isTrackingMissionRunning = NO;
-}
-
-- (void)missionManager:(DJIMissionManager *_Nonnull)manager missionProgressStatus:(DJIMissionProgressStatus *_Nonnull)missionProgress
-{
-    if ([missionProgress isKindOfClass:[DJIActiveTrackMissionStatus class]]) {
-        self.isTrackingMissionRunning = YES;
-        self.stopButton.hidden = NO;
-        DJIActiveTrackMissionStatus* status = (DJIActiveTrackMissionStatus*)missionProgress;
-        CGRect rect = [DemoUtility rectFromStreamSpace:status.trackingRect withView:self.renderView];
-        self.currentTrackingRect = rect;
-        if (status.executionState == DJIActiveTrackMissionExecutionStateWaitingForConfirmation) {
-            NSLog(@"Mission Need Confirm...");
-            self.renderView.text = @"?";
-            if (!self.isNeedConfirm) {
-                self.isNeedConfirm = YES;
-            }
-        }
-        else if (status.executionState == DJIActiveTrackMissionExecutionStateTargetLost)
-        {
-            NSLog(@"Mission Target Lost...");
-            self.renderView.isDottedLine = NO;
-            self.renderView.text = nil;
-            self.isNeedConfirm = NO;
-            [self.renderView updateRect:CGRectNull fillColor:nil];
-        }
-        else if (status.executionState == DJIActiveTrackMissionExecutionStateTracking ||
-                 status.executionState == DJIActiveTrackMissionExecutionStateTrackingWithLowConfidence)
-        {
-            self.renderView.isDottedLine = NO;
-            self.renderView.text = nil;
-            self.isNeedConfirm = NO;
-            [self.renderView updateRect:rect fillColor:[[UIColor greenColor] colorWithAlphaComponent:0.5]];
-            NSLog(@"Mission Tracking...");
-        }
-        else if (status.executionState == DJIActiveTrackMissionExecutionStateCannotContinue)
-        {
-            NSLog(@"Mission Waiting...");
-            self.renderView.isDottedLine = NO;
-            self.renderView.text = nil;
-            self.isNeedConfirm = NO;
-            [self.renderView updateRect:rect fillColor:[[UIColor redColor] colorWithAlphaComponent:0.5]];
-        }
-        
-        [self.logString appendFormat:@"Execution State:%@\n", [DemoUtility stringFromTrackingExecutionState:status.executionState]];
-        [self.logString appendFormat:@"trackingRect:{%f, %f, %f, %f}\n", status.trackingRect.origin.x, status.trackingRect.origin.y, status.trackingRect.size.width, status.trackingRect.size.height];
-        [self.logString appendFormat:@"Error:%@", status.error.localizedDescription];
-        
-    }
+-(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
+    [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
 }
 
 @end

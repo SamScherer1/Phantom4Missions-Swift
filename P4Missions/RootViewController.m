@@ -23,14 +23,14 @@
     
     [super viewDidLoad];
     
-    self.title = @"Phantom 4 Missions Demo";
+    self.title = @"TapFly & ActiveTrack Missions Demo";
     [self registerApp];
     
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,8 +41,8 @@
 
 - (void)registerApp
 {
-    NSString *appKey = @"Please enter your App Key here.";
-    [DJISDKManager registerApp:appKey withDelegate:self];
+    //Please enter the App Key in the info.plist file to register the app.
+    [DJISDKManager registerAppWithDelegate:self];
 }
 
 - (void)showAlertViewWithTitle:(NSString *)title withMessage:(NSString *)message
@@ -57,9 +57,9 @@
 
 #pragma mark DJISDKManagerDelegate Method
 
--(void) sdkManagerProductDidChangeFrom:(DJIBaseProduct* _Nullable) oldProduct to:(DJIBaseProduct* _Nullable) newProduct
+- (void)productConnected:(DJIBaseProduct *)product
 {
-    if (newProduct) {
+    if (product) {
         [self.tapFlyMissionButton setEnabled:YES];
         [self.activeTrackMissionButton setEnabled:YES];
     }else
@@ -69,7 +69,7 @@
     }
 }
 
-- (void)sdkManagerDidRegisterAppWithError:(NSError *)error
+- (void)appRegisteredWithError:(NSError *)error
 {
     if (error) {
         NSString* message = @"Register App Failed! Please enter your App Key and check the network.";
@@ -81,7 +81,7 @@
     {
         NSLog(@"registerAppSuccess");
 #if ENTER_DEBUG_MODE
-        [DJISDKManager enterDebugModeWithDebugId:@"192.168.1.106"];
+        [DJISDKManager enableBridgeModeWithBridgeAppIP:@"172.20.10.0"];
 #else
         [DJISDKManager startConnectionToProduct];
 #endif

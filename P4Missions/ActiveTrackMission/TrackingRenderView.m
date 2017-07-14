@@ -9,6 +9,7 @@
 #import "TrackingRenderView.h"
 
 #define TEXT_RECT_WIDTH (40)
+#define TEXT_RECT_HEIGHT (40)
 
 @interface TrackingRenderView ()
 
@@ -110,8 +111,8 @@
     
     if (self.text) {
         CGFloat origin_x = self.trackingRect.origin.x + 0.5*self.trackingRect.size.width - 0.5* TEXT_RECT_WIDTH;
-        CGFloat origin_y = self.trackingRect.origin.y + 0.5*self.trackingRect.size.height - 0.5* TEXT_RECT_WIDTH;
-        CGRect textRect = CGRectMake(origin_x , origin_y, TEXT_RECT_WIDTH, TEXT_RECT_WIDTH);
+        CGFloat origin_y = self.trackingRect.origin.y + 0.5*self.trackingRect.size.height - 0.5* TEXT_RECT_HEIGHT;
+        CGRect textRect = CGRectMake(origin_x , origin_y, TEXT_RECT_WIDTH, TEXT_RECT_HEIGHT);
         NSMutableParagraphStyle* paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
         paragraphStyle.alignment = NSTextAlignmentCenter;
