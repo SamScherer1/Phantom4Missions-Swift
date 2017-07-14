@@ -2,13 +2,22 @@
 
 ## Introduction
 
-From this demo, you will learn how to use the TapFly and ActiveTrack Missions of DJI iOS SDK to create a cool application for Phantom 4. You will get familiar with DJIMissionManager and use the Simulator of DJI Assistant 2 for testing, which is convenient for you to test the missions indoor. 
+From this demo, you will learn how to use the TapFly and ActiveTrack Missions of DJI iOS SDK to create a cool application for Mavic Pro. You will get familiar with DJIMissionManager and use the Simulator of DJI Assistant 2 for testing, which is convenient for you to test the missions indoor. 
 
 ## Requirements
 
  - iOS 9.0+
  - Xcode 8.0+
  - DJI iOS SDK 4.2.2
+
+## Supported DJI Products
+
+- Mavic Pro
+- Phantom 4
+- Phantom 4 Pro
+- Phantom 4 Advanced
+- Inspire 2
+- M200
 
 ## SDK Installation with CocoaPods
 
