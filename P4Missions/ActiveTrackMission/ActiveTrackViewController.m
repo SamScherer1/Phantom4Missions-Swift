@@ -11,7 +11,7 @@
 #import "DemoUtility.h"
 #import "DJIScrollView.h"
 
-@interface ActiveTrackViewController () <DJICameraDelegate, DJIVideoFeedListener, TrackingRenderViewDelegate>
+@interface ActiveTrackViewController () <DJIVideoFeedListener, TrackingRenderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet TrackingRenderView *renderView;
@@ -40,12 +40,6 @@
     [super viewWillAppear:animated];
     
     [[VideoPreviewer instance] setView:self.fpvView];
-    
-    DJICamera* camera = [DemoUtility fetchCamera];
-    if (camera) {
-        camera.delegate = self;
-    }
-    
     [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     [[VideoPreviewer instance] start];
 
@@ -72,7 +66,7 @@
     [super viewDidLoad];
     
     self.title = @"ActiveTrack Mission";
-
+    
     self.renderView.delegate = self;
     
     [self.retreatEnabledLabel setTextColor:[UIColor whiteColor]];

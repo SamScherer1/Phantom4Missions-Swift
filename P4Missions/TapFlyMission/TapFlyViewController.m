@@ -11,7 +11,7 @@
 #import "DemoUtility.h"
 #import "DJIScrollView.h"
 
-@interface TapFlyViewController () <DJICameraDelegate, DJIVideoFeedListener>
+@interface TapFlyViewController () <DJIVideoFeedListener>
 
 @property (weak, nonatomic) IBOutlet UIView *fpvView;
 @property (weak, nonatomic) IBOutlet PointingTouchView *touchView;
@@ -40,12 +40,6 @@
     [super viewWillAppear:animated];
     
     [[VideoPreviewer instance] setView:self.fpvView];
-        
-    DJICamera* camera = [DemoUtility fetchCamera];
-    if (camera) {
-        camera.delegate = self;
-    }
-    
     [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
     [[VideoPreviewer instance] start];
 

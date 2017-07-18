@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MeU-jl-o0z">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MeU-jl-o0z">
     <device id="retina5_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -156,11 +156,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dgf-Vb-eVJ">
-                                <rect key="frame" x="0.0" y="0.0" width="736" height="442"/>
+                                <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Dgf-Vb-eVJ" secondAttribute="height" multiplier="667:375" id="0QN-yO-Ce5"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2MI-Wx-RJZ" customClass="TrackingRenderView">
-                                <rect key="frame" x="0.0" y="19" width="736" height="414"/>
+                                <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RetreatEnabled :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaK-98-ksp">
@@ -258,9 +261,10 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="g6A-y5-loZ" secondAttribute="trailing" id="B26-Dn-Laa"/>
                             <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="MaK-98-ksp" secondAttribute="bottom" constant="13" id="Eqs-sv-yiA"/>
-                            <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="2MI-Wx-RJZ" secondAttribute="bottom" constant="-19" id="GTl-Sz-WTM"/>
+                            <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="2MI-Wx-RJZ" secondAttribute="bottom" id="GTl-Sz-WTM"/>
                             <constraint firstItem="2MI-Wx-RJZ" firstAttribute="leading" secondItem="Wsj-Jg-wpm" secondAttribute="leadingMargin" constant="-20" id="Hgg-lv-4H2"/>
                             <constraint firstItem="4bp-uD-2KW" firstAttribute="top" secondItem="vSK-Nk-ThK" secondAttribute="bottom" constant="8.6666666666666572" id="KOo-eW-b1j"/>
+                            <constraint firstItem="Dgf-Vb-eVJ" firstAttribute="top" secondItem="q63-5D-1MR" secondAttribute="bottom" constant="-64" id="LTz-jb-7PI"/>
                             <constraint firstItem="flJ-hT-YYB" firstAttribute="trailing" secondItem="g6A-y5-loZ" secondAttribute="trailing" id="Lny-Ch-lZx"/>
                             <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="Ofp-Uf-gZc" secondAttribute="bottom" constant="8" id="LvI-Ne-bzx"/>
                             <constraint firstItem="2Ff-po-ICx" firstAttribute="leading" secondItem="ac2-NQ-Q8U" secondAttribute="trailing" constant="23" id="NkN-S8-VPD"/>
@@ -268,18 +272,16 @@
                             <constraint firstItem="MaK-98-ksp" firstAttribute="leading" secondItem="Ofp-Uf-gZc" secondAttribute="trailing" constant="19" id="P80-RV-0Cq"/>
                             <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="g6A-y5-loZ" secondAttribute="bottom" constant="8" id="Qqy-QV-iQy"/>
                             <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="2Ff-po-ICx" secondAttribute="bottom" constant="13" id="UmF-zl-CcT"/>
-                            <constraint firstItem="Dgf-Vb-eVJ" firstAttribute="top" secondItem="q63-5D-1MR" secondAttribute="bottom" constant="-64" id="X9O-Ta-Vza"/>
+                            <constraint firstItem="Dgf-Vb-eVJ" firstAttribute="centerX" secondItem="Wsj-Jg-wpm" secondAttribute="centerX" id="ZGs-QS-3vm"/>
                             <constraint firstItem="flJ-hT-YYB" firstAttribute="top" secondItem="4bp-uD-2KW" secondAttribute="bottom" constant="13" id="aBj-ph-NXa"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Dgf-Vb-eVJ" secondAttribute="trailing" constant="-20" id="bso-27-55H"/>
+                            <constraint firstItem="Dgf-Vb-eVJ" firstAttribute="centerY" secondItem="Wsj-Jg-wpm" secondAttribute="centerY" id="h15-sA-f8I"/>
                             <constraint firstItem="4bp-uD-2KW" firstAttribute="centerY" secondItem="Wsj-Jg-wpm" secondAttribute="centerY" id="jEu-Rv-9P8"/>
                             <constraint firstItem="4bp-uD-2KW" firstAttribute="trailing" secondItem="g6A-y5-loZ" secondAttribute="trailing" id="lHR-zY-79N"/>
-                            <constraint firstItem="Dgf-Vb-eVJ" firstAttribute="leading" secondItem="Wsj-Jg-wpm" secondAttribute="leadingMargin" constant="-20" id="mPk-R0-Aof"/>
                             <constraint firstItem="g6A-y5-loZ" firstAttribute="leading" secondItem="MaK-98-ksp" secondAttribute="trailing" constant="10" id="n4f-jd-anl"/>
-                            <constraint firstItem="2MI-Wx-RJZ" firstAttribute="top" secondItem="q63-5D-1MR" secondAttribute="bottom" constant="-45" id="pRB-yW-xeO"/>
+                            <constraint firstItem="2MI-Wx-RJZ" firstAttribute="top" secondItem="q63-5D-1MR" secondAttribute="bottom" constant="-64" id="pRB-yW-xeO"/>
                             <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="ac2-NQ-Q8U" secondAttribute="bottom" constant="8" id="qiJ-xm-4Ew"/>
                             <constraint firstItem="vSK-Nk-ThK" firstAttribute="trailing" secondItem="g6A-y5-loZ" secondAttribute="trailing" id="tTM-Ch-11o"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2MI-Wx-RJZ" secondAttribute="trailing" constant="-20" id="u19-TG-CUf"/>
-                            <constraint firstItem="zOE-CL-X1X" firstAttribute="top" secondItem="Dgf-Vb-eVJ" secondAttribute="bottom" constant="-28" id="zLx-g6-jCJ"/>
                         </constraints>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
@@ -320,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytK-Mk-dEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1112.771739130435" y="207.24637681159422"/>
+            <point key="canvasLocation" x="1112.2938530734634" y="207.19999999999999"/>
         </scene>
         <!--Tap Fly View Controller-->
         <scene sceneID="wF6-ZJ-b1u">
@@ -335,7 +337,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgT-4j-44d">
-                                <rect key="frame" x="-0.33333333333331439" y="0.0" width="736.66666666666674" height="414"/>
+                                <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GgT-4j-44d" secondAttribute="height" multiplier="667:375" id="h3y-hj-YuL"/>
