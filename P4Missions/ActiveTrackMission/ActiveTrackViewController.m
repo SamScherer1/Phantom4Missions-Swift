@@ -96,6 +96,8 @@
         weakReturn(target);
         if (!error) {
             target.retreatSwitch.on = boolean;
+        }else{
+            ShowResult(@"Get RetreatEnabled failed");
         }
     }];
 }
@@ -153,9 +155,6 @@
         ![self isTrackingState:curState]) {
         if (event.error) {
             ShowResult(@"Mission Interrupted: %@", event.error.description);
-        }
-        else {
-            ShowResult(@"Mission Stopped. ");
         }
     }
     
