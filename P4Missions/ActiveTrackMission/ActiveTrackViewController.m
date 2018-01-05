@@ -160,7 +160,7 @@
     
     if (event.trackingState) {
         DJIActiveTrackTrackingState *state = event.trackingState;
-        CGRect rect = [DemoUtility rectFromStreamSpace:state.targetRect];
+        CGRect rect = [DemoUtility rectFromStreamSpace:state.targetRect withView:self.renderView];
         self.currentTrackingRect = rect;
         if (event.trackingState.state == DJIActiveTrackTargetStateWaitingForConfirmation) {
             self.isNeedConfirm = YES;
