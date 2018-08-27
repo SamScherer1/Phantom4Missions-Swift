@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DJISDK/DJISDK.h>
-#import <VideoPreviewer/VideoPreviewer.h>
+#import <DJIWidget/DJIVideoPreviewer.h>
 
 #define weakSelf(__TARGET__) __weak typeof(self) __TARGET__=self
 #define weakReturn(__TARGET__) if(__TARGET__==nil)return;

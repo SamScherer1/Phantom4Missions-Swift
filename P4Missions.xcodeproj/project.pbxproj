@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A41940991DCB69080076478C /* VideoPreviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A41940981DCB68FD0076478C /* VideoPreviewer.framework */; };
-		A419409A1DCB69080076478C /* VideoPreviewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A41940981DCB68FD0076478C /* VideoPreviewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A438D3331C97E3270003D129 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3321C97E3270003D129 /* main.m */; };
 		A438D3361C97E3270003D129 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D3351C97E3270003D129 /* AppDelegate.m */; };
 		A438D3441C97E3270003D129 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A438D3431C97E3270003D129 /* Assets.xcassets */; };
@@ -19,6 +17,10 @@
 		A438D4FC1C994B800003D129 /* TrackingRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FB1C994B800003D129 /* TrackingRenderView.m */; };
 		A438D4FF1C994B880003D129 /* PointingTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FE1C994B880003D129 /* PointingTouchView.m */; };
 		A438D5171C9953030003D129 /* TapFlyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D5161C9953030003D129 /* TapFlyViewController.m */; };
+		A46985BE21343F2D001A1F08 /* DJIWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A46985BD21343F25001A1F08 /* DJIWidget.framework */; };
+		A46985BF21343F2D001A1F08 /* DJIWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A46985BD21343F25001A1F08 /* DJIWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A46985C321343F38001A1F08 /* FFmpeg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A46985C221343F38001A1F08 /* FFmpeg.framework */; };
+		A46985C421343F38001A1F08 /* FFmpeg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A46985C221343F38001A1F08 /* FFmpeg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A46ED68E1F0E4A5000F2EBD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46ED68C1F0E4A5000F2EBD6 /* Main.storyboard */; };
 		A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C539A71C9954A200757368 /* Foundation.framework */; };
 		A4D307321F0E47B400182FA3 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D307301F0E47B400182FA3 /* DJIScrollView.m */; };
@@ -27,19 +29,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A41940971DCB68FD0076478C /* PBXContainerItemProxy */ = {
+		A46985BC21343F25001A1F08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
+			containerPortal = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 02A543FD1C3C51CB0083C11B;
-			remoteInfo = VideoPreviewer;
+			remoteGlobalIDString = 2E54A2CD1F4A904000916B4D;
+			remoteInfo = DJIWidget;
 		};
-		A419409B1DCB69080076478C /* PBXContainerItemProxy */ = {
+		A46985C021343F2D001A1F08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
+			containerPortal = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 02A543FC1C3C51CB0083C11B;
-			remoteInfo = VideoPreviewer;
+			remoteGlobalIDString = 2E54A2CC1F4A904000916B4D;
+			remoteInfo = DJIWidget;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -50,7 +52,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A419409A1DCB69080076478C /* VideoPreviewer.framework in Embed Frameworks */,
+				A46985BF21343F2D001A1F08 /* DJIWidget.framework in Embed Frameworks */,
+				A46985C421343F38001A1F08 /* FFmpeg.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,7 +61,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoPreviewer.xcodeproj; path = VideoPreviewer/VideoPreviewer.xcodeproj; sourceTree = "<group>"; };
 		A41940A31DCB76970076478C /* P4Missions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = P4Missions.entitlements; sourceTree = "<group>"; };
 		A438D32E1C97E3270003D129 /* P4Missions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P4Missions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A438D3321C97E3270003D129 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,6 +83,8 @@
 		A438D4FE1C994B880003D129 /* PointingTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointingTouchView.m; sourceTree = "<group>"; };
 		A438D5151C9953030003D129 /* TapFlyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapFlyViewController.h; sourceTree = "<group>"; };
 		A438D5161C9953030003D129 /* TapFlyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapFlyViewController.m; sourceTree = "<group>"; };
+		A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DJIWidget.xcodeproj; path = DJIWidget/DJIWidget.xcodeproj; sourceTree = "<group>"; };
+		A46985C221343F38001A1F08 /* FFmpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FFmpeg.framework; path = DJIWidget/FFmpeg/FFmpeg.framework; sourceTree = "<group>"; };
 		A46ED68D1F0E4A5000F2EBD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A4C539A71C9954A200757368 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4D3072F1F0E47B400182FA3 /* DJIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIScrollView.h; sourceTree = "<group>"; };
@@ -96,9 +100,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A46985BE21343F2D001A1F08 /* DJIWidget.framework in Frameworks */,
+				A46985C321343F38001A1F08 /* FFmpeg.framework in Frameworks */,
 				A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */,
 				F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */,
-				A41940991DCB69080076478C /* VideoPreviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,23 +113,16 @@
 		5F7989BF9952BA868671B213 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */,
+				A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */,
 				ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A41940941DCB68FD0076478C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A41940981DCB68FD0076478C /* VideoPreviewer.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		A438D3251C97E3270003D129 = {
 			isa = PBXGroup;
 			children = (
+				A46985C221343F38001A1F08 /* FFmpeg.framework */,
 				A438D3301C97E3270003D129 /* P4Missions */,
 				A438D3501C97E3270003D129 /* P4MissionsTests */,
 				A438D32F1C97E3270003D129 /* Products */,
@@ -213,6 +211,14 @@
 			path = TapFlyMission;
 			sourceTree = "<group>";
 		};
+		A46985B921343F25001A1F08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A46985BD21343F25001A1F08 /* DJIWidget.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AFEDF01D144050E76A8AE20F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +246,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A419409C1DCB69080076478C /* PBXTargetDependency */,
+				A46985C121343F2D001A1F08 /* PBXTargetDependency */,
 			);
 			name = P4Missions;
 			productName = P4Missions;
@@ -280,8 +286,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A41940941DCB68FD0076478C /* Products */;
-					ProjectRef = A41940931DCB68FD0076478C /* VideoPreviewer.xcodeproj */;
+					ProductGroup = A46985B921343F25001A1F08 /* Products */;
+					ProjectRef = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -292,11 +298,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A41940981DCB68FD0076478C /* VideoPreviewer.framework */ = {
+		A46985BD21343F25001A1F08 /* DJIWidget.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = VideoPreviewer.framework;
-			remoteRef = A41940971DCB68FD0076478C /* PBXContainerItemProxy */;
+			path = DJIWidget.framework;
+			remoteRef = A46985BC21343F25001A1F08 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -383,10 +389,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A419409C1DCB69080076478C /* PBXTargetDependency */ = {
+		A46985C121343F2D001A1F08 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = VideoPreviewer;
-			targetProxy = A419409B1DCB69080076478C /* PBXContainerItemProxy */;
+			name = DJIWidget;
+			targetProxy = A46985C021343F2D001A1F08 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -503,7 +509,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../VideoPreviewer",
+					"$(PROJECT_DIR)/DJIWidget/FFmpeg",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -530,7 +536,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../VideoPreviewer",
+					"$(PROJECT_DIR)/DJIWidget/FFmpeg",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

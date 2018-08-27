@@ -39,9 +39,9 @@
 {
     [super viewWillAppear:animated];
     
-    [[VideoPreviewer instance] setView:self.fpvView];
+    [[DJIVideoPreviewer instance] setView:self.fpvView];
     [[DJISDKManager videoFeeder].primaryVideoFeed addListener:self withQueue:nil];
-    [[VideoPreviewer instance] start];
+    [[DJIVideoPreviewer instance] start];
 
     [self updateBypassStatus];
     [self updateSpeedSlider];
@@ -58,7 +58,7 @@
 {
     [super viewWillDisappear:animated];
     
-    [[VideoPreviewer instance] unSetView];
+    [[DJIVideoPreviewer instance] unSetView];
     [[DJISDKManager videoFeeder].primaryVideoFeed removeListener:self];
 
 }
@@ -332,7 +332,7 @@
 #pragma mark - DJIVideoFeedListener
 
 -(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
-    [[VideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
+    [[DJIVideoPreviewer instance] push:(uint8_t *)videoData.bytes length:(int)videoData.length];
 }
 
 @end

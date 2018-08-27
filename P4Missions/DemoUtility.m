@@ -59,7 +59,7 @@ void ShowResult(NSString *format, ...)
 
 + (CGPoint) pointToStreamSpace:(CGPoint)point withView:(UIView *)view
 {
-    VideoPreviewer* previewer = [VideoPreviewer instance];
+    DJIVideoPreviewer* previewer = [DJIVideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     CGPoint videoPoint = [previewer convertPoint:point toVideoViewFromView:view];
     CGPoint normalized = CGPointMake(videoPoint.x/videoFrame.size.width, videoPoint.y/videoFrame.size.height);
@@ -67,7 +67,7 @@ void ShowResult(NSString *format, ...)
 }
 
 + (CGPoint) pointFromStreamSpace:(CGPoint)point{
-    VideoPreviewer* previewer = [VideoPreviewer instance];
+    DJIVideoPreviewer* previewer = [DJIVideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     CGPoint videoPoint = CGPointMake(point.x*videoFrame.size.width,
                                      point.y*videoFrame.size.height);
@@ -75,20 +75,20 @@ void ShowResult(NSString *format, ...)
 }
 
 + (CGPoint) pointFromStreamSpace:(CGPoint)point withView:(UIView *)view{
-    VideoPreviewer* previewer = [VideoPreviewer instance];
+    DJIVideoPreviewer* previewer = [DJIVideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     CGPoint videoPoint = CGPointMake(point.x*videoFrame.size.width, point.y*videoFrame.size.height);
     return [previewer convertPoint:videoPoint fromVideoViewToView:view];
 }
 
 + (CGSize) sizeToStreamSpace:(CGSize)size{
-    VideoPreviewer* previewer = [VideoPreviewer instance];
+    DJIVideoPreviewer* previewer = [DJIVideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     return CGSizeMake(size.width/videoFrame.size.width, size.height/videoFrame.size.height);
 }
 
 + (CGSize) sizeFromStreamSpace:(CGSize)size{
-    VideoPreviewer* previewer = [VideoPreviewer instance];
+    DJIVideoPreviewer* previewer = [DJIVideoPreviewer instance];
     CGRect videoFrame = [previewer frame];
     return CGSizeMake(size.width*videoFrame.size.width, size.height*videoFrame.size.height);
 }
