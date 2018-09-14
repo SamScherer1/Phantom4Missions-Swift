@@ -9,6 +9,7 @@ From this demo, you will learn how to use the TapFly and ActiveTrack Missions of
  - iOS 9.0+
  - Xcode 8.0+
  - DJI iOS SDK 4.7.1
+ - DJIWidget 1.0
 
 ## Supported DJI Products
 
@@ -33,7 +34,7 @@ sudo gem install cocoapods
 
 The process may take a long time, please wait. For further installation instructions, please check [this guide](https://guides.cocoapods.org/using/getting-started.html#getting-started).
 
-**2.** Install SDK with CocoaPods in the Project
+**2.** Install SDK and DJIWidget with CocoaPods in the Project
 
 Run the following command in the **ObjcSampleCode** and **SwiftSampleCode** paths:
 
@@ -47,6 +48,7 @@ If you install it successfully, you should get the messages similar to the follo
 Analyzing dependencies
 Downloading dependencies
 Installing DJI-SDK-iOS (4.7.1)
+Installing DJIWidget (1.0)
 Generating Pods project
 Integrating client project
 

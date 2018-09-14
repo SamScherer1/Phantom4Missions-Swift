@@ -17,33 +17,12 @@
 		A438D4FC1C994B800003D129 /* TrackingRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FB1C994B800003D129 /* TrackingRenderView.m */; };
 		A438D4FF1C994B880003D129 /* PointingTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D4FE1C994B880003D129 /* PointingTouchView.m */; };
 		A438D5171C9953030003D129 /* TapFlyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A438D5161C9953030003D129 /* TapFlyViewController.m */; };
-		A46985BE21343F2D001A1F08 /* DJIWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A46985BD21343F25001A1F08 /* DJIWidget.framework */; };
-		A46985BF21343F2D001A1F08 /* DJIWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A46985BD21343F25001A1F08 /* DJIWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A46985C321343F38001A1F08 /* FFmpeg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A46985C221343F38001A1F08 /* FFmpeg.framework */; };
-		A46985C421343F38001A1F08 /* FFmpeg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A46985C221343F38001A1F08 /* FFmpeg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A46ED68E1F0E4A5000F2EBD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A46ED68C1F0E4A5000F2EBD6 /* Main.storyboard */; };
 		A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C539A71C9954A200757368 /* Foundation.framework */; };
 		A4D307321F0E47B400182FA3 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D307301F0E47B400182FA3 /* DJIScrollView.m */; };
 		A4D307331F0E47B400182FA3 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D307311F0E47B400182FA3 /* DJIScrollView.xib */; };
 		F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		A46985BC21343F25001A1F08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2E54A2CD1F4A904000916B4D;
-			remoteInfo = DJIWidget;
-		};
-		A46985C021343F2D001A1F08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E54A2CC1F4A904000916B4D;
-			remoteInfo = DJIWidget;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		A4C53A261C99566000757368 /* Embed Frameworks */ = {
@@ -52,8 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A46985BF21343F2D001A1F08 /* DJIWidget.framework in Embed Frameworks */,
-				A46985C421343F38001A1F08 /* FFmpeg.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,8 +60,6 @@
 		A438D4FE1C994B880003D129 /* PointingTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointingTouchView.m; sourceTree = "<group>"; };
 		A438D5151C9953030003D129 /* TapFlyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapFlyViewController.h; sourceTree = "<group>"; };
 		A438D5161C9953030003D129 /* TapFlyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapFlyViewController.m; sourceTree = "<group>"; };
-		A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DJIWidget.xcodeproj; path = DJIWidget/DJIWidget.xcodeproj; sourceTree = "<group>"; };
-		A46985C221343F38001A1F08 /* FFmpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FFmpeg.framework; path = DJIWidget/FFmpeg/FFmpeg.framework; sourceTree = "<group>"; };
 		A46ED68D1F0E4A5000F2EBD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A4C539A71C9954A200757368 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4D3072F1F0E47B400182FA3 /* DJIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIScrollView.h; sourceTree = "<group>"; };
@@ -100,8 +75,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A46985BE21343F2D001A1F08 /* DJIWidget.framework in Frameworks */,
-				A46985C321343F38001A1F08 /* FFmpeg.framework in Frameworks */,
 				A4C539A81C9954A200757368 /* Foundation.framework in Frameworks */,
 				F25E1E3AC41F015CE7C1545C /* libPods-P4Missions.a in Frameworks */,
 			);
@@ -113,7 +86,6 @@
 		5F7989BF9952BA868671B213 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */,
 				ADE5B89328C3970CFE45F624 /* libPods-P4Missions.a */,
 			);
 			name = Frameworks;
@@ -122,7 +94,6 @@
 		A438D3251C97E3270003D129 = {
 			isa = PBXGroup;
 			children = (
-				A46985C221343F38001A1F08 /* FFmpeg.framework */,
 				A438D3301C97E3270003D129 /* P4Missions */,
 				A438D3501C97E3270003D129 /* P4MissionsTests */,
 				A438D32F1C97E3270003D129 /* Products */,
@@ -211,14 +182,6 @@
 			path = TapFlyMission;
 			sourceTree = "<group>";
 		};
-		A46985B921343F25001A1F08 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A46985BD21343F25001A1F08 /* DJIWidget.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AFEDF01D144050E76A8AE20F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,7 +209,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A46985C121343F2D001A1F08 /* PBXTargetDependency */,
 			);
 			name = P4Missions;
 			productName = P4Missions;
@@ -284,28 +246,12 @@
 			mainGroup = A438D3251C97E3270003D129;
 			productRefGroup = A438D32F1C97E3270003D129 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A46985B921343F25001A1F08 /* Products */;
-					ProjectRef = A46985B821343F25001A1F08 /* DJIWidget.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A438D32D1C97E3270003D129 /* P4Missions */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A46985BD21343F25001A1F08 /* DJIWidget.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DJIWidget.framework;
-			remoteRef = A46985BC21343F25001A1F08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A438D32C1C97E3270003D129 /* Resources */ = {
@@ -387,14 +333,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A46985C121343F2D001A1F08 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DJIWidget;
-			targetProxy = A46985C021343F2D001A1F08 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A438D3451C97E3270003D129 /* LaunchScreen.storyboard */ = {
