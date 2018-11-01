@@ -8,8 +8,8 @@ From this demo, you will learn how to use the TapFly and ActiveTrack Missions of
 
  - iOS 9.0+
  - Xcode 8.0+
- - DJI iOS SDK 4.7.1
- - DJIWidget 1.1
+ - DJI iOS SDK 4.8
+ - DJIWidget 1.2
 
 ## Supported DJI Products
 
@@ -47,8 +47,8 @@ If you install it successfully, you should get the messages similar to the follo
 ~~~
 Analyzing dependencies
 Downloading dependencies
-Installing DJI-SDK-iOS (4.7.1)
-Installing DJIWidget (1.1)
+Installing DJI-SDK-iOS (4.8)
+Installing DJIWidget (1.2)
 Generating Pods project
 Integrating client project
 
