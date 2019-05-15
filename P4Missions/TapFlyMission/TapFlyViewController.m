@@ -313,8 +313,8 @@
 {
     
     weakSelf(target);
-    
-    [[self missionOperator] stopMissionWtihCompletion:^(NSError * _Nullable error) {
+
+    [[self missionOperator] stopMissionWithCompletion:^(NSError * _Nullable error) {
         ShowResult(@"Stop Mission:%@", error.localizedDescription);
         if (!error) {
             weakReturn(target);
