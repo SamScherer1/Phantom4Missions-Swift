@@ -2,7 +2,7 @@
 
 ## Introduction
 
-From this demo, you will learn how to use the TapFly and ActiveTrack Missions of DJI iOS SDK to create a cool application for Mavic Pro. You will get familiar with DJIMissionManager and use the Simulator of DJI Assistant 2 for testing, which is convenient for you to test the missions indoor. 
+From this demo, you will learn how to use the TapFly and ActiveTrack Missions of DJI iOS SDK to create a cool application for Mavic Pro. You will get familiar with DJIMissionManager and use the Simulator of DJI Assistant 2 for testing, which is convenient for you to test the missions indoor.
 
 ## Requirements
 
@@ -58,7 +58,7 @@ installed.
 ~~~
 
 > **Note**: If you saw "Unable to satisfy the following requirements" issue during pod install, please run the following commands to update your pod repo and install the pod again:
-> 
+>
 > ~~~
 > pod repo update
 > pod install
@@ -72,7 +72,7 @@ For this demo's tutorial: **Creating a TapFly and ActiveTrack Missions Applicati
 
 We’d love to hear your feedback on this demo and tutorial.
 
-Please use **Stack Overflow** [dji-sdk](https://stackoverflow.com/questions/tagged/dji-sdk) or **email** [dev@dji.com](dev@dji.com) when you meet any problems of using this demo. At a minimum please let us know:
+Please use **DJI Developer Forum** [dji-forum](https://forum.dji.com/forum-139-1.html?from=developer) or **email** [dev@dji.com](dev@dji.com) when you meet any problems of using this demo. At a minimum please let us know:
 
 * Which DJI Product you are using?
 * Which iOS Device and iOS version you are using?
