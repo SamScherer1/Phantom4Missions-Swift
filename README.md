@@ -71,7 +71,7 @@ For this demo's tutorial: **Creating a TapFly and ActiveTrack Missions Applicati
 The tutorial is currently only available in Objective C.
 
 ## Known Issues
-Phantom4Missions-Swift hasn't been completely converted to swift from its Objective C counterpart. 
+Phantom4Missions-Swift hasn't been converted to swift from its Objective C counterpart. 
 
 
 ## Feedback
